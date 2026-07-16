@@ -54,17 +54,27 @@ export default function Contact() {
             <p>abraham-addisu</p>
           </motion.a>
 
-          <motion.div className="contact__card card" variants={fadeUp}>
+          <motion.a 
+            href={`tel:${personalInfo.phone}`}
+            className="contact__card card" 
+            variants={fadeUp}
+          >
             <FiPhone size={24} className="contact__icon" />
             <h3>Phone</h3>
             <p>{personalInfo.phone}</p>
-          </motion.div>
+          </motion.a>
 
-          <motion.div className="contact__card card" variants={fadeUp}>
+          <motion.a 
+            href={`https://maps.google.com/?q=${personalInfo.location}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact__card card" 
+            variants={fadeUp}
+          >
             <FiMapPin size={24} className="contact__icon" />
             <h3>Location</h3>
             <p>{personalInfo.location}</p>
-          </motion.div>
+          </motion.a>
         </motion.div>
       </div>
 

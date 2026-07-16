@@ -75,12 +75,44 @@
 
 @media (max-width: 768px) {
   .contact__grid {
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-lg);
+  }
+  
+  .contact__card {
+    padding: var(--space-md);
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    justify-content: center;
+  }
+  
+  .contact__card h3,
+  .contact__card p {
+    display: none;
+  }
+  
+  .contact__icon {
+    margin: 0;
+  }
+
+  .footer__links {
+    gap: var(--space-sm);
+  }
+
+  .footer__link {
+    font-size: var(--fs-xs);
   }
 }
 
 @media (max-width: 375px) {
   .contact__grid {
-    grid-template-columns: 1fr;
+    gap: var(--space-md);
+  }
+  .contact__card {
+    width: 56px;
+    height: 56px;
   }
 }
