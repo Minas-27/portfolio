@@ -138,7 +138,7 @@ export const projects = [
       'Award-winning health record system integrating Ethiopia\'s national Fayda ID to unify fragmented medical histories. Includes AI-driven preliminary diagnostics and a localized Amharic AI chatbot for accessibility. Secured 2nd Place at CoBuild Ethiopia AI Hackathon 2025.',
     tags: ['AI', 'Kotlin', 'API Integration', 'UI Design'],
     status: 'Live',
-    link: 'https://www.upwork.com/freelancers/~0142f1cf79221e6871?viewMode=1&p=2046116849510187008',
+    link: 'https://www.linkedin.com/posts/abraham-addisu_cobuildabrethiopiaabraiabrhackathonabr2025-activity-7402093729572126720-lDga?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFThwF0BWrohJRWKElATtOS8yq3FnorcHPY',
   },
   {
     title: 'Addis 360',
@@ -173,9 +173,8 @@ export const projects = [
     description:
       'Cross-platform Flutter features for a children\'s EdTech platform (Netherlands), ElevenLabs AI voice integration, multilingual/localized UX.',
     tags: ['Flutter', 'Dart', 'AI', 'EdTech'],
-    status: 'Internal',
-    link: null,
-    linkNote: null,
+    status: 'Live',
+    link: 'https://www.linkedin.com/posts/brainbite_brainbite-brainbiters-activity-7405622544046858240-RO4a?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFThwF0BWrohJRWKElATtOS8yq3FnorcHPY',
   },
   {
     title: 'Abroid Recall - Telegram Archive & Journal App',
