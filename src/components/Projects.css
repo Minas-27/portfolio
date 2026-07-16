@@ -1,0 +1,76 @@
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--space-xl);
+  margin-top: var(--space-md);
+}
+
+.projects__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.projects__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.projects__ext-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  color: var(--clr-text-muted);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.projects__ext-link:hover {
+  color: var(--clr-accent);
+  background: var(--clr-accent-bg);
+}
+
+.projects__card-title {
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--clr-text);
+}
+
+.projects__card-role {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--clr-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.projects__card-desc {
+  font-size: var(--fs-sm);
+  color: var(--clr-text-secondary);
+  line-height: var(--lh-relaxed);
+  flex: 1;
+}
+
+.projects__card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: var(--space-sm);
+}
+
+.projects__card-todo {
+  font-size: var(--fs-xs);
+  color: var(--clr-text-muted);
+  font-style: italic;
+  padding-top: var(--space-sm);
+  border-top: 1px dashed var(--clr-border);
+}
+
+@media (max-width: 768px) {
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+}
