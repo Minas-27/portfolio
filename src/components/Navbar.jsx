@@ -7,6 +7,7 @@ import './Navbar.css';
 const navItems = [
   { to: 'hero', label: 'Home' },
   { to: 'about', label: 'About' },
+  { to: 'services', label: 'Services' },
   { to: 'experience', label: 'Experience' },
   { to: 'projects', label: 'Projects' },
   { to: 'certifications', label: 'Certifications' },

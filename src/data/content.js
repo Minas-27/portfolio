@@ -31,6 +31,68 @@ export const personalInfo = {
   profilePhoto: profilePhotoImg, 
 };
 
+export const upworkProfile = personalInfo.upwork;
+
+export const services = [
+  {
+    title: 'Native Android Development',
+    description: 'Production apps in Kotlin and Jetpack Compose, MVVM architecture, full lifecycle ownership from planning through Play Store release and post-launch monitoring.',
+  },
+  {
+    title: 'Cross-Platform Development (Flutter)',
+    description: 'Single-codebase apps for Android and iOS, ideal for startups and clients who need both platforms without doubling development cost.',
+  },
+  {
+    title: 'Real-Time & Location-Based Features',
+    description: 'Live tracking, ride-matching, and real-time dispatch using Socket.io and FusedLocationProviderClient with foreground services, proven in a live ride-hailing app serving real users.',
+  },
+  {
+    title: 'ERP & Business System Integrations',
+    description: 'Mobile apps that connect directly to backend systems like Odoo ERP via JSON-RPC, replacing manual paper-based workflows with real-time digital tools.',
+  },
+  {
+    title: 'Offline-First App Architecture',
+    description: 'Apps that work reliably with zero or unstable internet: local persistence layers, zero-latency search and filtering, built for markets where connectivity isn\'t guaranteed.',
+  },
+  {
+    title: 'Firebase & Backend Integration',
+    description: 'Authentication, real-time databases, push notifications (FCM), and cloud storage, wired cleanly into app architecture.',
+  },
+  {
+    title: 'Healthcare & Insurance-Sector Mobile & Full-Stack Solutions',
+    description: 'Built FaydaHealth, an AI-powered health record system (2nd place, CoBuild Ethiopia AI Hackathon 2025) unifying patient records, AI-driven preliminary diagnostics, and a localized Amharic AI chatbot, integrating Ethiopia\'s national Fayda ID. Also contributed to enterprise medical and insurance-sector applications professionally.',
+  },
+  {
+    title: 'AI-Powered Mobile Features',
+    description: 'Practical AI integration into mobile products: AI-assisted development workflows (Claude, Gemini, Codex) plus in-product features like AI-driven diagnostics and bilingual AI chatbots, validated in hackathon-winning products.',
+  },
+  {
+    title: 'Figma-to-Code Implementation',
+    description: 'Turning design mockups into pixel-accurate, responsive native UI, clean handoff from design to shipped product.',
+  },
+  {
+    title: 'MVP Development for Startups',
+    description: 'Taking an idea from a rough concept to a working, testable app quickly.',
+  },
+  {
+    title: 'Play Store Publishing & Release Management',
+    description: 'Play Store listing setup, versioning, release rollout, and post-launch monitoring.',
+  },
+  {
+    title: 'Legacy App Maintenance & Refactoring',
+    description: 'Reviewing, stabilizing, and modernizing existing codebases.',
+  }
+];
+
+export const processSteps = [
+  'Discovery & Requirements',
+  'Architecture & Design Handoff',
+  'Build',
+  'Test',
+  'Deploy',
+  'Post-Launch Support'
+];
+
 export const skills = [
   'Android App Development',
   'Mobile App Development',
