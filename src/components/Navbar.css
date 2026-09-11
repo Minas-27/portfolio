@@ -162,3 +162,104 @@
     display: flex;
   }
 }
+
+/* ── Redesign overrides ───────────────────────────────── */
+.navbar__theme-toggle {
+  background: transparent !important;
+  border: 1px solid var(--clr-border) !important;
+  color: var(--clr-text-muted) !important;
+  border-radius: 50% !important;
+  box-shadow: none !important;
+}
+.navbar__theme-toggle:hover {
+  border-color: var(--clr-accent) !important;
+  color: var(--clr-accent) !important;
+  background: transparent !important;
+}
+.navbar__logo, .navbar__brand { font-family: var(--font-display); letter-spacing: -0.02em; }
+.navbar__link { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+
+/* ── Nav polish ────────────────────────────────────────── */
+.navbar__links { display: flex; align-items: center; gap: 0.35rem; list-style: none; }
+.navbar__links li { list-style: none; }
+
+/* the polish above must not resurrect the desktop links on small screens */
+@media (max-width: 768px) {
+  .navbar__links { display: none; }
+  .navbar__hamburger { display: grid; place-items: center; }
+}
+.navbar__link {
+  display: inline-block;
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-full);
+  color: var(--clr-text-secondary);
+  transition: color var(--duration-fast) var(--ease-smooth),
+              background var(--duration-fast) var(--ease-smooth);
+}
+.navbar__link:hover { color: var(--clr-text); background: var(--clr-surface-hover); }
+.navbar__link.active,
+.navbar__link--active {
+  color: var(--clr-accent);
+  background: var(--clr-accent-bg);
+}
+/* the old underline indicator is redundant next to the pill */
+.navbar__link.active::after,
+.navbar__link--active::after { display: none; }
+
+/* ── Floating pill on scroll ──────────────────────────────────────
+   At the top the bar is invisible and full-bleed. Once you scroll it
+   contracts into a centred island, the page content keeps the full
+   width and the nav stops looking like browser chrome. */
+.navbar {
+  background: transparent !important;
+  border-bottom: 0 !important;
+  box-shadow: none !important;
+  padding-top: 0;
+  transition: padding-top var(--duration-normal) var(--ease-smooth);
+}
+
+.navbar__inner {
+  border: 1px solid transparent;
+  border-radius: var(--radius-full);
+  padding-inline: var(--space-lg);
+  transition:
+    max-width var(--duration-slow) var(--ease-smooth),
+    background var(--duration-normal) var(--ease-smooth),
+    border-color var(--duration-normal) var(--ease-smooth),
+    box-shadow var(--duration-normal) var(--ease-smooth),
+    height var(--duration-normal) var(--ease-smooth);
+}
+
+.navbar--scrolled { padding-top: 0.7rem; }
+
+.navbar--scrolled .navbar__inner {
+  max-width: min(var(--max-width), calc(100% - 2rem));
+  height: calc(var(--nav-height) - 14px);
+  background: color-mix(in srgb, var(--clr-surface) 82%, transparent);
+  border-color: var(--clr-border);
+  box-shadow: 0 10px 34px -14px rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(18px) saturate(150%);
+  -webkit-backdrop-filter: blur(18px) saturate(150%);
+}
+
+[data-theme="light"] .navbar--scrolled .navbar__inner {
+  box-shadow: 0 10px 30px -16px rgba(20, 24, 29, 0.22);
+}
+
+/* Browsers without color-mix still get a solid island */
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .navbar--scrolled .navbar__inner { background: var(--clr-surface); }
+}
+
+@media (max-width: 640px) {
+  .navbar--scrolled { padding-top: 0.5rem; }
+  .navbar--scrolled .navbar__inner {
+    max-width: calc(100% - 1.5rem);
+    padding-inline: var(--space-md);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar, .navbar__inner { transition: none; }
+}

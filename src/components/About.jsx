@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { skills, currentlyLearning, personalInfo } from '../data/content';
+import { skills, personalInfo } from '../data/content';
 import './About.css';
 
 export default function About() {
@@ -62,7 +62,7 @@ export default function About() {
               variants={fadeUp}
               custom={3}
             >
-              Currently a Full Stack Engineer (Mobile App focus) at Medco Technology Solutions, I build client-facing medical and insurance applications. I'm also pursuing my B.Sc. in Software Engineering at Bahir Dar University (2023–2027), maintaining an active open-source project on pub.dev, and delivering freelance work on Upwork with a 5.0-star rating.
+              Currently a Full Stack Engineer (Mobile App focus) at Medco Technology Solutions, I build client-facing medical and insurance applications. I'm also pursuing my B.Sc. in Software Engineering at Bahir Dar University (2023-2027), maintaining an active open-source project on pub.dev.
             </motion.p>
 
           </div>

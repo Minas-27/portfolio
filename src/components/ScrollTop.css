@@ -1,0 +1,79 @@
+.scrolltop {
+  position: fixed;
+  left: var(--space-lg);
+  bottom: var(--space-lg);
+  z-index: 900;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--clr-border);
+  background: color-mix(in srgb, var(--clr-surface) 86%, transparent);
+  backdrop-filter: blur(14px) saturate(150%);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  color: var(--clr-text-secondary);
+  cursor: pointer;
+  box-shadow: 0 10px 28px -14px rgba(0, 0, 0, 0.6);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px) scale(0.9);
+  transition:
+    opacity var(--duration-normal) var(--ease-smooth),
+    transform var(--duration-normal) var(--ease-smooth),
+    visibility var(--duration-normal),
+    border-color var(--duration-fast) var(--ease-smooth),
+    color var(--duration-fast) var(--ease-smooth);
+}
+.scrolltop.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+.scrolltop:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+  transform: translateY(-2px);
+}
+.scrolltop svg:last-of-type { position: relative; z-index: 1; }
+
+/* progress ring */
+.scrolltop__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+.scrolltop__track,
+.scrolltop__fill {
+  fill: none;
+  stroke-width: 1.6;
+}
+.scrolltop__track { stroke: var(--clr-border); }
+.scrolltop__fill {
+  stroke: var(--clr-accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 120ms linear;
+}
+
+@supports not (background: color-mix(in srgb, red 50%, transparent)) {
+  .scrolltop { background: var(--clr-surface); }
+}
+
+@media (max-width: 560px) {
+  .scrolltop {
+    left: var(--space-md);
+    bottom: var(--space-md);
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrolltop { transition: opacity 1ms, visibility 1ms; transform: none; }
+  .scrolltop:hover { transform: none; }
+  .scrolltop__fill { transition: none; }
+}

@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { FiExternalLink, FiX } from 'react-icons/fi';
 import { Trophy, Medal, Microscope, Bot, Smartphone, Laptop, Rocket, Award, Image as ImageIcon } from 'lucide-react';
 import { certifications } from '../data/content';
+import useBodyLock from '../lib/useBodyLock';
 import './Certifications.css';
 
 /* Simple icon mapping by issuer keyword */
@@ -23,6 +24,7 @@ function getIcon(issuer) {
 export default function Certifications() {
   const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
   const [selectedImage, setSelectedImage] = useState(null);
+  useBodyLock(!!selectedImage, () => setSelectedImage(null));
 
   return (
     <section className="certifications section" id="certifications" ref={ref}>
@@ -33,7 +35,11 @@ export default function Certifications() {
           transition={{ duration: 0.5 }}
         >
           <p className="section-label">Recognition</p>
-          <h2 className="section-title">Certifications & Awards</h2>
+          <h2 className="section-title">The receipts</h2>
+          <p className="section-subtitle">
+            Competition results and certifications, with credential IDs where they exist,
+            so none of it has to be taken on trust.
+          </p>
         </motion.div>
 
         <div className="certifications__grid">
@@ -50,9 +56,15 @@ export default function Certifications() {
               </span>
               <div className="certifications__info">
                 <h3 className="certifications__title">{cert.title}</h3>
-                <p className="certifications__issuer">{cert.issuer}</p>
+                <p className="certifications__issuer">
+                  {cert.issuer}
+                  {cert.date && <span className="certifications__date"> · {cert.date}</span>}
+                </p>
                 {cert.detail && (
                   <p className="certifications__detail">{cert.detail}</p>
+                )}
+                {cert.credentialId && (
+                  <p className="certifications__cred">ID {cert.credentialId}</p>
                 )}
               </div>
               {cert.link ? (
@@ -84,6 +96,8 @@ export default function Certifications() {
       <AnimatePresence>
         {selectedImage && (
           <motion.div
+            key="cert-lightbox"
+            data-modal
             className="certifications__modal-backdrop"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

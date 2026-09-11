@@ -1,135 +1,147 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-scroll';
-import { FiMail, FiDownload, FiLinkedin, FiGithub, FiExternalLink } from 'react-icons/fi';
-import { personalInfo } from '../data/content';
+import { FiMail, FiDownload, FiLinkedin, FiGithub, FiArrowDown } from 'react-icons/fi';
+import { FaTelegramPlane } from 'react-icons/fa';
+import { personalInfo, projects } from '../data/content';
+import PhoneShowcase from './PhoneShowcase';
 import './Hero.css';
 
-export default function Hero() {
-  const [roleIndex, setRoleIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
+const liveCount = projects.filter((p) => p.status === 'Live').length;
 
-  const currentRole = personalInfo.roles[roleIndex];
+const FACTS = [
+  { value: liveCount, label: 'projects shipped', count: true },
+  { value: 5, label: 'packages on pub.dev', count: true },
+  { value: 2027, label: 'graduating' },
+];
 
+/* Counts up once on mount. The two small numbers are the credibility
+   markers, so they earn a moment of attention; the year does not. */
+function Tally({ to, enabled }) {
+  const [n, setN] = useState(enabled ? 0 : to);
   useEffect(() => {
-    let timeout;
-    if (!deleting && charIndex < currentRole.length) {
-      timeout = setTimeout(() => setCharIndex((c) => c + 1), 70);
-    } else if (!deleting && charIndex === currentRole.length) {
-      timeout = setTimeout(() => setDeleting(true), 2000);
-    } else if (deleting && charIndex > 0) {
-      timeout = setTimeout(() => setCharIndex((c) => c - 1), 40);
-    } else if (deleting && charIndex === 0) {
-      setDeleting(false);
-      setRoleIndex((i) => (i + 1) % personalInfo.roles.length);
+    if (!enabled) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setN(to);
+      return;
     }
-    return () => clearTimeout(timeout);
-  }, [charIndex, deleting, currentRole, roleIndex]);
+    let raf = 0;
+    const start = performance.now();
+    const tick = (now) => {
+      const p = Math.min(1, (now - start) / 900);
+      setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
+      if (p < 1) raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [to, enabled]);
+  return <>{n}</>;
+}
 
-  const container = {
+export default function Hero() {
+  const stagger = {
     hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.3 } },
+    show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
   };
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.4, 0, 0.2, 1] } },
+  const up = {
+    hidden: { opacity: 0, y: 22 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
   };
 
   return (
-    <section className="hero section" id="hero">
+    <section className="hero" id="hero">
+      <div className="hero__grid-lines" aria-hidden="true" />
       <div className="hero__bg-glow" aria-hidden="true" />
+
       <motion.div
-        className="hero__content container"
-        variants={container}
+        className="hero__inner container hero__inner--split"
+        variants={stagger}
         initial="hidden"
         animate="show"
       >
-        <motion.p className="hero__greeting" variants={fadeUp}>
-          Hello, I'm
-        </motion.p>
-
-        <motion.h1 className="hero__name" variants={fadeUp}>
-          {personalInfo.name}
+        <div className="hero__copy">
+        <motion.h1 className="hero__name" variants={up}>
+          I build <em>mobile apps</em><br />
+          people actually use.
         </motion.h1>
 
-        <motion.div className="hero__role-wrapper" variants={fadeUp}>
-          <span className="hero__role-text">
-            {currentRole.slice(0, charIndex)}
-          </span>
-          <span className="hero__cursor" aria-hidden="true">|</span>
-        </motion.div>
-
-        <motion.p className="hero__value-prop" variants={fadeUp}>
+        <motion.p className="hero__lede" variants={up}>
           {personalInfo.valueProp}
         </motion.p>
 
-        <motion.div className="hero__ctas" variants={fadeUp}>
-          <a
-            href={`mailto:${personalInfo.email}`}
-            className="btn btn--primary"
-            id="hero-contact-cta"
-          >
-            <FiMail size={16} /> Contact Me
+        <motion.div className="hero__ctas" variants={up}>
+          <a href={`mailto:${personalInfo.email}`} className="btn btn--primary" id="hero-contact-cta">
+            <FiMail size={15} /> Work with me
           </a>
-          <a
-            href={personalInfo.resumes.main}
-            className="btn btn--secondary"
-            download
-            id="hero-download-resume"
-          >
-            <FiDownload size={16} /> Download Resume
+          <a href={personalInfo.resumes.main} className="btn btn--secondary" download id="hero-download-resume">
+            <FiDownload size={15} /> Resume
           </a>
-        </motion.div>
-
-        <motion.div className="hero__socials" variants={fadeUp}>
           <a
             href={personalInfo.linkedin}
             target="_blank"
             rel="noopener noreferrer"
-            className="hero__social-link"
-            aria-label="LinkedIn profile"
+            className="hero__icon-link"
+            aria-label="LinkedIn"
             id="hero-linkedin"
           >
-            <FiLinkedin size={20} />
+            <FiLinkedin size={17} />
           </a>
           <a
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            className="hero__social-link"
-            aria-label="GitHub profile"
+            className="hero__icon-link"
+            aria-label="GitHub"
             id="hero-github"
           >
-            <FiGithub size={20} />
+            <FiGithub size={17} />
           </a>
           <a
-            href={personalInfo.upwork}
+            href={personalInfo.telegram}
             target="_blank"
             rel="noopener noreferrer"
-            className="hero__social-link"
-            aria-label="Upwork profile"
-            id="hero-upwork"
+            className="hero__icon-link"
+            aria-label="Telegram"
+            id="hero-telegram"
           >
-            <FiExternalLink size={20} />
+            <FaTelegramPlane size={17} />
           </a>
         </motion.div>
 
-        <motion.div variants={fadeUp}>
-          <Link
-            to="about"
-            smooth
-            duration={600}
-            offset={-80}
-            className="hero__scroll-hint"
-            tabIndex={0}
-            aria-label="Scroll to about section"
-          >
-            <span className="hero__scroll-arrow" aria-hidden="true">↓</span>
-          </Link>
+        <motion.dl className="hero__facts" variants={up}>
+          {FACTS.map((f) => (
+            <div key={f.label}>
+              <dt><Tally to={f.value} enabled={!!f.count} /></dt>
+              <dd>{f.label}</dd>
+            </div>
+          ))}
+        </motion.dl>
+
+        <motion.div className="hero__marquee" variants={up} aria-hidden="true">
+          <div className="hero__marquee-track">
+            {[...personalInfo.roles, ...personalInfo.roles].map((r, i) => (
+              <span key={i}>{r}<i>/</i></span>
+            ))}
+          </div>
+        </motion.div>
+        </div>
+
+        <motion.div className="hero__device" variants={up}>
+          <PhoneShowcase />
         </motion.div>
       </motion.div>
+
+      <Link
+        to="about"
+        smooth
+        duration={600}
+        offset={-80}
+        className="hero__scroll"
+        tabIndex={0}
+        aria-label="Scroll to about"
+      >
+        <FiArrowDown size={14} />
+      </Link>
     </section>
   );
 }

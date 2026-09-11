@@ -17,7 +17,7 @@ export default function Services() {
           <p className="section-label">Services</p>
           <h2 className="section-title">What I Can Deliver</h2>
           <p className="section-subtitle">
-            Every project starts with understanding the problem, not writing code — I take full ownership from planning to deployment.
+            Every project starts with understanding the problem, not writing code, I take full ownership from planning to deployment.
           </p>
         </motion.div>
 
@@ -67,7 +67,7 @@ export default function Services() {
           transition={{ duration: 0.5, delay: 0.7 }}
         >
           <p>
-            5-star rated on Upwork — <a href={upworkProfile} target="_blank" rel="noopener noreferrer">View Profile</a>. Have a project in mind? <a href="mailto:abrahamaddisu217@gmail.com" className="btn btn--primary services__cta-btn">Let's talk &rarr;</a>
+            5-star rated on Upwork, <a href={upworkProfile} target="_blank" rel="noopener noreferrer">View Profile</a>. Have a project in mind? <a href="mailto:abrahamaddisu217@gmail.com" className="btn btn--primary services__cta-btn">Let's talk &rarr;</a>
           </p>
         </motion.div>
       </div>

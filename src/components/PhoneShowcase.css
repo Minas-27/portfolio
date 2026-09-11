@@ -1,0 +1,143 @@
+.phone { display: flex; flex-direction: column; align-items: center; gap: var(--space-md); }
+
+.phone__frame {
+  position: relative;
+  width: 278px;
+  height: 570px;
+  border-radius: 40px;
+  padding: 11px;
+  background: linear-gradient(150deg, #2b3139, #14181d 55%, #23282f);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.07),
+    0 40px 70px -30px rgba(0,0,0,0.85),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+  animation: phone-float 7s ease-in-out infinite;
+}
+@keyframes phone-float {
+  0%, 100% { transform: translateY(0) rotate(-1.2deg); }
+  50%      { transform: translateY(-12px) rotate(-0.4deg); }
+}
+
+.phone__notch {
+  position: absolute;
+  top: 11px; left: 50%; transform: translateX(-50%);
+  width: 92px; height: 20px;
+  background: #14181d;
+  border-radius: 0 0 12px 12px;
+  z-index: 3;
+}
+
+.phone__screen {
+  position: relative;
+  height: 100%;
+  border-radius: 30px;
+  background: var(--clr-bg-alt);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+/* status bar */
+.phone__statusbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 18px 4px;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  color: var(--clr-text);
+}
+.phone__time { font-weight: 500; }
+.phone__glyphs { display: inline-flex; align-items: center; gap: 5px; color: var(--clr-text-secondary); }
+.phone__battery {
+  display: inline-block; width: 15px; height: 8px;
+  border: 1px solid currentColor; border-radius: 2px;
+  position: relative;
+}
+.phone__battery::after {
+  content: ''; position: absolute; inset: 1px; right: 4px;
+  background: var(--clr-live); border-radius: 1px;
+}
+
+/* app bar */
+.phone__appbar {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-sm);
+  padding: var(--space-md) 18px var(--space-sm);
+}
+.phone__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--clr-accent);
+}
+.phone__appbar h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem; font-weight: 600; letter-spacing: -0.02em;
+  color: var(--clr-text); line-height: 1.1;
+}
+.phone__date {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  color: var(--clr-text-muted);
+  text-align: right;
+  max-width: 8rem;
+  line-height: 1.4;
+}
+
+/* list */
+.phone__list { flex: 1; padding: 4px 10px; overflow: hidden; }
+.phone__row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 8px;
+  border-radius: 12px;
+  transition: background var(--duration-normal) var(--ease-smooth);
+  color: var(--clr-text-muted);
+}
+.phone__row.is-active { background: var(--clr-surface-hover); }
+.phone__icon {
+  display: grid; place-items: center;
+  width: 32px; height: 32px; flex-shrink: 0;
+  border-radius: 9px;
+  background: var(--clr-accent-bg);
+  color: var(--clr-accent);
+  font-family: var(--font-mono);
+  font-size: 0.66rem; font-weight: 500;
+  transition: background var(--duration-normal) var(--ease-smooth);
+}
+.phone__row.is-active .phone__icon { background: var(--clr-accent); color: #14181d; }
+.phone__meta { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.phone__meta strong {
+  font-size: 0.72rem; font-weight: 500; color: var(--clr-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.phone__meta em {
+  font-family: var(--font-mono);
+  font-size: 0.56rem; font-style: normal; letter-spacing: 0.04em;
+  color: var(--clr-text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.phone__bar {
+  width: 96px; height: 4px; border-radius: 2px;
+  background: var(--clr-border-strong);
+  margin: 6px auto 9px;
+}
+
+.phone__caption {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  line-height: 1.5;
+  color: var(--clr-text-muted);
+  text-align: center;
+  max-width: 24ch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phone__frame { animation: none; transform: none; }
+}
+
+/* rows are real controls now */
+.phone__row { cursor: pointer; }
+.phone__row:focus-visible {
+  outline: 2px solid var(--clr-accent);
+  outline-offset: -2px;
+}
+.phone__row:active { transform: scale(0.985); }

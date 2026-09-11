@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Link } from 'react-scroll';
-import { FiMail, FiLinkedin, FiPhone, FiMapPin } from 'react-icons/fi';
+import { FiMail, FiLinkedin, FiMapPin } from 'react-icons/fi';
+import { FaTelegramPlane } from 'react-icons/fa';
 import { personalInfo } from '../data/content';
 import './Contact.css';
 
@@ -54,14 +55,17 @@ export default function Contact() {
             <p>abraham-addisu</p>
           </motion.a>
 
-          <motion.a 
-            href={`tel:${personalInfo.phone}`}
-            className="contact__card card" 
+          <motion.a
+            href={personalInfo.telegram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="contact__card card"
             variants={fadeUp}
+            id="contact-telegram"
           >
-            <FiPhone size={24} className="contact__icon" />
-            <h3>Phone</h3>
-            <p>{personalInfo.phone}</p>
+            <FaTelegramPlane size={24} className="contact__icon" />
+            <h3>Telegram</h3>
+            <p>@abroid0</p>
           </motion.a>
 
           <motion.a 

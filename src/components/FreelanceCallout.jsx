@@ -25,7 +25,7 @@ export default function FreelanceCallout() {
               <span className="freelance__rating-label">on Upwork</span>
             </div>
             <p className="freelance__project">
-              {freelanceRecord.completedProjects} completed project - {freelanceRecord.projectName} ({freelanceRecord.projectDate})
+              {freelanceRecord.projectName}
             </p>
             <p className="freelance__quote">
               "{freelanceRecord.clientQuote}"

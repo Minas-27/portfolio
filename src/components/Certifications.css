@@ -126,3 +126,107 @@
 .certifications__modal-close:hover {
   background: rgba(255, 255, 255, 0.4);
 }
+
+/* ── Redesign ──────────────────────────────────────────── */
+.certifications__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: var(--space-md);
+  align-items: start;
+}
+
+/* Grid, not flex: the link is a sibling of .info in the markup, so a
+   row layout turns it into a third column and crushes the title. */
+.certifications__card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "icon info"
+    "link link";
+  column-gap: var(--space-md);
+  row-gap: var(--space-md);
+  align-content: start;
+  padding: var(--space-lg);
+  height: 100%;
+}
+
+.certifications__icon {
+  grid-area: icon;
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: var(--radius-sm);
+  background: var(--clr-accent-bg);
+  color: var(--clr-accent);
+}
+
+.certifications__info { grid-area: info; min-width: 0; }
+
+.certifications__title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--clr-text);
+  margin-bottom: 5px;
+  text-wrap: balance;
+}
+.certifications__issuer {
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--clr-text-secondary);
+}
+.certifications__date {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--clr-text-muted);
+  white-space: nowrap;
+}
+.certifications__detail {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  line-height: 1.5;
+  color: var(--clr-accent);
+  margin-top: 8px;
+}
+.certifications__cred {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  line-height: 1.5;
+  color: var(--clr-text-muted);
+  margin-top: 8px;
+  word-break: break-all;
+  opacity: 0.7;
+}
+
+.certifications__view-link {
+  grid-area: link;
+  justify-self: start;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.42rem 0.8rem;
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--clr-text-secondary);
+  cursor: pointer;
+  transition: border-color var(--duration-fast) var(--ease-smooth),
+              color var(--duration-fast) var(--ease-smooth);
+}
+.certifications__view-link:hover {
+  border-color: var(--clr-accent);
+  color: var(--clr-accent);
+}
+
+@media (max-width: 420px) {
+  .certifications__card { padding: var(--space-md); }
+  .certifications__title { font-size: 0.96rem; }
+}
