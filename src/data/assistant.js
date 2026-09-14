@@ -45,6 +45,7 @@ export const LABELS = {
   medco: 'Experience · Medco',
   clients: 'Confidentiality',
   daga: 'Projects · Daga Taxi',
+  upkeep: 'Open source · upkeep',
   ethiodevkit: 'Open source · ethio_dev_kit',
   stt: 'Open source · amharic_stt',
   fayda: 'Projects · FaydaHealth',
@@ -101,6 +102,7 @@ export const PROMPTS = {
   medco: 'What did he do at Medco?',
   clients: 'Who are the clients?',
   daga: 'Tell me about Daga Taxi',
+  upkeep: 'What is upkeep?',
   ethiodevkit: 'What is ethio_dev_kit?',
   stt: 'Did he build Amharic speech-to-text?',
   fayda: 'Tell me about FaydaHealth',
@@ -187,10 +189,16 @@ export const ENTRIES = [
       "Daga Taxi, a production ride-hailing platform for Daga Meter Taxi PLC in Bahir Dar. Passenger app, driver app, backend. It's live on Google Play.\n\nGoogle Maps live tracking, Socket.io driver dispatch, background location with a foreground service, Firebase Auth, payment gateway, push notifications.\n\nA classmate brought the client and they built it together, starting October 2025. He still supports it, it's the project that taught him delivering is about a third of the way in, not the finish line.",
   },
   {
+    id: 'upkeep',
+    keywords: ['upkeep', 'cli', 'cli tool', 'command line', 'developer tool', 'dev tool', 'dependencies', 'dependency', 'abandoned', 'discontinued', 'gradle', 'flutter upgrade', 'project health'],
+    answer:
+      "upkeep, a free, open-source command-line tool that checks the health of a Flutter or Dart project. He built and published it on 12 September 2026.\n\nThe problem: pub get warns you about packages marked discontinued, but most abandoned packages are never marked. They just stop, and you find out when an upgrade breaks. upkeep scan reports discontinued, incompatible and abandoned dependencies, with the evidence behind every verdict, and checks Gradle, AGP and JDK versions against Google's published Android requirements. upkeep fix --apply makes only the changes it can justify and restores every file if pub get fails.\n\nIt's his first project aimed at developers everywhere rather than Ethiopia specifically. It's brand new, so he won't claim anyone uses it yet.\n\nSite: upkeep.abroid.dev · Source: github.com/Minas-27/upkeep",
+  },
+  {
     id: 'ethiodevkit',
     keywords: ['ethio_dev_kit', 'ethio dev kit', 'ethiodevkit', 'package', 'packages', 'open source', 'opensource', 'pub.dev', 'pubdev', 'library'],
     answer:
-      "ethio_dev_kit, an open-source Flutter/Dart toolkit for Ethiopian developers. Five packages, MIT licensed, published under his own verified publisher at pub.dev/publishers/abroid.dev.\n\nethio_calendar for Gregorian↔Ethiopian date conversion, ethiopic_typography for bilingual theming, ethio_validators for phone, currency and Fayda ID formats, amharic_stt, and ethio_holidays.\n\nHe'd say none of it is clever engineering. It's work somebody had to do, and until someone does it every app built here starts at a disadvantage nobody wrote down.",
+      "ethio_dev_kit, an open-source Flutter/Dart toolkit for Ethiopian developers. Six packages, MIT licensed, published under his own verified publisher at pub.dev/publishers/abroid.dev, alongside upkeep.\n\nethio_calendar for Gregorian↔Ethiopian date conversion, ethiopic_typography for bilingual theming, ethio_validators for phone, currency and Fayda ID formats, amharic_stt, ethio_holidays, and ethio_address for Region, Zone and Woreda data.\n\nHe'd say none of it is clever engineering. It's work somebody had to do, and until someone does it every app built here starts at a disadvantage nobody wrote down.",
   },
   {
     id: 'stt',
@@ -382,7 +390,7 @@ export const ENTRIES = [
     id: 'junior',
     keywords: ['junior', 'experience', 'years', 'senior', 'enough', 'too young', 'student still', 'level'],
     answer:
-      "Fair question, and he'd rather meet it head on than dress it up.\n\nHe's early career. He's also shipped a ride-hailing platform that carries real passengers, published five packages other developers can install, and works full-time on healthcare and insurance software while finishing a degree.\n\nWhat he doesn't claim: leading teams, managing people, or a decade of architecture decisions. The record is real, verifiable and specific, and it's the size it is. That's the whole point of how this site is written.",
+      "Fair question, and he'd rather meet it head on than dress it up.\n\nHe's early career. He's also shipped a ride-hailing platform that carries real passengers, published seven packages other developers can install, and works full-time on healthcare and insurance software while finishing a degree.\n\nWhat he doesn't claim: leading teams, managing people, or a decade of architecture decisions. The record is real, verifiable and specific, and it's the size it is. That's the whole point of how this site is written.",
   },
   {
     id: 'references',
@@ -394,7 +402,7 @@ export const ENTRIES = [
     id: 'code',
     keywords: ['his github', 'see his code', 'see code', 'source code', 'code', 'source', 'github', 'repo', 'repository', 'sample code', 'portfolio code'],
     answer:
-      "github.com/Minas-27, and the packages are at pub.dev/publishers/abroid.dev.\n\nWhat's public: ethio_dev_kit, Addis 360, the Odoo inventory scanner, Abroid Scan, Abroid Recall, HireAI. What isn't: anything belonging to Medco or to clients, which stays private for obvious reasons.",
+      "github.com/Minas-27, and the packages are at pub.dev/publishers/abroid.dev.\n\nWhat's public: upkeep, ethio_dev_kit, Addis 360, the Odoo inventory scanner, Abroid Scan, Abroid Recall, HireAI. What isn't: anything belonging to Medco or to clients, which stays private for obvious reasons.",
   },
   {
     id: 'why',
@@ -406,7 +414,7 @@ export const ENTRIES = [
     id: 'next',
     keywords: ['next', 'future', 'plans', 'goal', 'goals', 'ambition', 'after graduation', 'five years'],
     answer:
-      "Finish the degree in 2027 while keeping the Medco work going remotely. Keep maintaining Daga Taxi and ethio_dev_kit. He's also in the inaugural cohort of ASIP, a Pan-African fellowship, which started in September 2026.\n\nBeyond that he'd tell you he doesn't have a five-year plan and is suspicious of people who present one. The closest thing to a method he has came from a classmate: grab the opportunity first, decide afterwards, because you can't know what a thing leads to until you're already inside it.",
+      "Finish the degree in 2027 while keeping the Medco work going remotely. Keep maintaining Daga Taxi and ethio_dev_kit, and keep building upkeep, his first tool aimed at Flutter developers everywhere. He's also in the inaugural cohort of ASIP, a Pan-African fellowship, which started in September 2026.\n\nBeyond that he'd tell you he doesn't have a five-year plan and is suspicious of people who present one. The closest thing to a method he has came from a classmate: grab the opportunity first, decide afterwards, because you can't know what a thing leads to until you're already inside it.",
   },
   {
     id: 'bahirdar',

@@ -62,7 +62,7 @@ export default function About() {
               variants={fadeUp}
               custom={3}
             >
-              Currently a Full Stack Engineer (Mobile App focus) at Medco Technology Solutions, I build client-facing medical and insurance applications. I'm also pursuing my B.Sc. in Software Engineering at Bahir Dar University (2023-2027), maintaining an active open-source project on pub.dev.
+              Currently a Full Stack Engineer (Mobile App focus) at Medco Technology Solutions, I build client-facing medical and insurance applications. I'm also pursuing my B.Sc. in Software Engineering at Bahir Dar University (2023-2027), and maintaining two open-source projects on pub.dev: ethio_dev_kit and upkeep.
             </motion.p>
 
           </div>

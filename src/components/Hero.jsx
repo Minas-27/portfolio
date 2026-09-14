@@ -11,7 +11,7 @@ const liveCount = projects.filter((p) => p.status === 'Live').length;
 
 const FACTS = [
   { value: liveCount, label: 'projects shipped', count: true },
-  { value: 5, label: 'packages on pub.dev', count: true },
+  { value: 7, label: 'packages on pub.dev', count: true },
   { value: 2027, label: 'graduating' },
 ];
 

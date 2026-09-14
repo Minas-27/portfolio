@@ -148,6 +148,15 @@ export const experiences = [
 
 export const projects = [
   {
+    title: 'upkeep',
+    role: 'Creator & Maintainer',
+    description:
+      'Open-source command-line tool that tells you the truth about a Flutter or Dart project\'s health. pub get warns about packages marked discontinued, but most abandoned packages are never marked, they just stop. upkeep scan reports discontinued, incompatible and abandoned dependencies with the evidence behind every verdict, and checks Gradle, AGP and JDK versions against Google\'s published Android requirements. upkeep fix --apply makes only the changes it can justify, verifies them with pub get, and restores every file if that fails. Also runs as a GitHub Action. Live on pub.dev, MIT licensed.',
+    tags: ['Dart', 'CLI', 'Developer Tools', 'Open Source', 'pub.dev'],
+    status: 'Live',
+    link: 'https://upkeep.abroid.dev',
+  },
+  {
     title: 'Daga Taxi',
     role: 'Lead Android Developer',
     description:
@@ -160,7 +169,7 @@ export const projects = [
     title: 'ethio_dev_kit',
     role: 'Creator & Maintainer',
     description:
-      'Open-source 5-package Flutter/Dart toolkit for Ethiopian developers, live on pub.dev, MIT licensed: ethio_calendar (Gregorian↔Ethiopian date conversion), ethiopic_typography (bilingual theming), ethio_validators (phone/currency/Fayda ID format validation), amharic_stt (Amharic speech-to-text support, wrapping an existing speech engine so Amharic works inside Flutter), ethio_holidays (dynamically computed Ethiopian holidays).',
+      'Open-source 6-package Flutter/Dart toolkit for Ethiopian developers, live on pub.dev, MIT licensed: ethio_calendar (Gregorian↔Ethiopian date conversion), ethiopic_typography (bilingual theming), ethio_validators (phone/currency/Fayda ID format validation), amharic_stt (Amharic speech-to-text support, wrapping an existing speech engine so Amharic works inside Flutter), ethio_holidays (dynamically computed Ethiopian holidays), ethio_address (Region → Zone → Woreda data with cascading picker widgets).',
     tags: ['Flutter', 'Dart', 'Open Source', 'pub.dev'],
     status: 'Live',
     link: 'https://pub.dev/publishers/abroid.dev',
