@@ -188,6 +188,9 @@
   box-shadow: var(--shadow-lg);
 }
 .projects__detail:hover { transform: none; }
+/* Two classes, so it beats the tilt-card `.card { overflow: hidden }`
+   further down. Without this a long description hides the button. */
+.projects__detail.card { overflow-y: auto; overscroll-behavior: contain; }
 
 .projects__close {
   position: absolute;
