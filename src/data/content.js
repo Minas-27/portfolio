@@ -29,7 +29,7 @@ export const personalInfo = {
   resumes: {
     // Bump the version when the PDF changes, otherwise browsers and the
     // CDN keep serving the cached old one from the same filename.
-    main: '/assets/abraham_addisu_resume.pdf?v=2026-09',
+    main: '/assets/abraham_addisu_resume.pdf?v=2026-09-14',
   },
   profilePhoto: profilePhotoImg, 
 };
