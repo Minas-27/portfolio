@@ -220,15 +220,6 @@ export const projects = [
     link: 'https://github.com/Minas-27/Abroid-Scan',
   },
   {
-    title: 'BrainBite',
-    role: 'iOS Flutter Developer Intern',
-    description:
-      'Cross-platform Flutter features for a children\'s EdTech platform (Netherlands), ElevenLabs AI voice integration, multilingual/localized UX.',
-    tags: ['Flutter', 'Dart', 'AI', 'EdTech'],
-    status: 'Live',
-    link: 'https://www.linkedin.com/posts/brainbite_brainbite-brainbiters-activity-7405622544046858240-RO4a?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFThwF0BWrohJRWKElATtOS8yq3FnorcHPY',
-  },
-  {
     title: 'Abroid Recall - Telegram Archive & Journal App',
     role: 'Android Developer',
     description:
