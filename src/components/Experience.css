@@ -1,100 +1,128 @@
-.experience__timeline {
+.xp {
   position: relative;
-  margin-top: var(--space-2xl);
-  padding-left: var(--space-2xl);
+  padding-left: 32px;
 }
-
-.experience__timeline::before {
-  content: '';
-  position: absolute;
-  left: 11px;
-  top: 8px;
-  bottom: 8px;
-  width: 2px;
-  background: linear-gradient(to bottom, var(--clr-accent), var(--clr-border));
-  border-radius: 1px;
-}
-
-.experience__item {
-  position: relative;
-  margin-bottom: var(--space-xl);
-}
-
-.experience__item:last-child {
-  margin-bottom: 0;
-}
-
-.experience__dot {
-  position: absolute;
-  left: calc(-1 * var(--space-2xl) + 5px);
-  top: 28px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--clr-accent);
-  border: 3px solid var(--clr-bg);
-  box-shadow: 0 0 0 2px var(--clr-accent);
-  z-index: 1;
-}
-
-.experience__card {
-  padding: var(--space-xl);
-}
-
-.experience__card:hover {
-  border-color: rgba(99, 102, 241, 0.2);
-}
-
-.experience__header {
+.xp__list {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  margin-bottom: var(--space-sm);
+  gap: clamp(28px, 4vw, 48px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.experience__title {
-  font-size: var(--fs-lg);
-  font-weight: 700;
-  color: var(--clr-text);
+.xp__spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 5px;
+  width: 1px;
+  background: var(--line-2);
+}
+.xp__spine i {
+  position: absolute;
+  inset: 0;
+  background: var(--fg);
+  transform: scaleY(0);
+  transform-origin: 50% 0;
 }
 
-.experience__company {
-  font-size: var(--fs-sm);
-  font-weight: 600;
-  color: var(--clr-accent);
+.xp__item { position: relative; }
+
+.xp__node {
+  position: absolute;
+  top: 32px;
+  left: -32px;
+  width: 12px;
+  height: 12px;
+  background: var(--fg);
+}
+.xp__link {
+  position: absolute;
+  top: 37px;
+  left: -20px;
+  width: 20px;
+  height: 1px;
+  background: var(--line-2);
+  transform-origin: 0 50%;
 }
 
-.experience__meta {
+.xp__card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid var(--line);
+  background: var(--bg-2);
+  transition: border-color var(--dur-1) ease;
+}
+.xp__card:hover { border-color: var(--accent); }
+
+.xp__ghost {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  font: 600 clamp(3.25rem, 6vw, 5rem) / 0.85 var(--f-display);
+  font-stretch: 85%;
+  letter-spacing: -0.05em;
+  color: color-mix(in srgb, var(--fg) 7%, transparent);
+  pointer-events: none;
+}
+
+.xp__date {
   display: flex;
-  gap: var(--space-md);
-  margin-bottom: var(--space-md);
-  flex-wrap: wrap;
-}
-
-.experience__date,
-.experience__location {
-  font-size: var(--fs-xs);
-  color: var(--clr-text-muted);
-  font-weight: 500;
-}
-
-.experience__location {
-  display: inline-flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: var(--fg-2);
+}
+.xp__now {
+  width: 6px;
+  height: 6px;
+  margin-left: 2px;
+  border-radius: 50%;
+  background: var(--green);
 }
 
-.experience__description {
-  font-size: var(--fs-sm);
-  color: var(--clr-text-secondary);
-  line-height: var(--lh-relaxed);
+.xp__title {
+  margin-bottom: 10px;
+  padding-right: 2.4em;
+  font: 600 clamp(1.35rem, 2vw, 1.85rem) / 1.12 var(--f-display);
+  font-stretch: 92%;
+  letter-spacing: -0.03em;
+}
+.xp__type { margin: -4px 0 12px; color: var(--fg-3); }
+
+.xp__line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+  font-size: 0.8125rem;
+  color: var(--fg-2);
+}
+.xp__line svg { flex: 0 0 auto; }
+
+.xp__desc { margin-top: 14px; }
+.xp__desc .expand__summary { font-size: 0.9375rem; }
+
+@media (min-width: 960px) {
+  .xp { padding-left: 0; }
+  .xp__spine { left: 50%; }
+  .xp__item { width: 50%; }
+  .xp__item--left { align-self: flex-start; padding-right: 56px; }
+  .xp__item--right {
+    align-self: flex-end;
+    padding-left: 56px;
+    margin-top: -120px;
+  }
+  .xp__item:first-of-type { margin-top: 0; }
+  .xp__node { left: auto; }
+  .xp__item--left .xp__node { right: -6px; }
+  .xp__item--right .xp__node { left: -6px; }
+  .xp__item--left .xp__link { left: auto; right: 6px; width: 50px; transform-origin: 100% 50%; }
+  .xp__item--right .xp__link { left: 6px; width: 50px; }
 }
 
-@media (max-width: 768px) {
-  .experience__timeline {
-    padding-left: var(--space-xl);
-  }
-  .experience__dot {
-    left: calc(-1 * var(--space-xl) + 5px);
-  }
+@media (prefers-reduced-motion: reduce) {
+  .xp__spine i { transform: none; }
 }

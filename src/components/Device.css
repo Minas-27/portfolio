@@ -1,0 +1,214 @@
+/* ── Composition ───────────────────────────────────────────────── */
+.pvis {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+.pvis__front,
+.pvis__back { grid-area: 1 / 1; }
+
+/* Phones: two, overlapping, the back one turned away */
+.pvis--phone .pvis__back { transform: translate(32%, 5%) rotate(7deg) scale(0.9); }
+.pvis--phone .pvis__front { transform: translate(-14%, 0) rotate(-4deg); }
+
+/* Browsers: one in front, one stacked behind */
+.pvis--web .pvis__front { width: 90%; transform: translate(-3%, 7%); }
+.pvis--web .pvis__back { width: 80%; transform: translate(8%, -16%); opacity: 0.5; }
+
+/* Photos: two prints */
+.pvis--photo .pvis__front { width: 44%; transform: translate(-30%, 4%) rotate(-4deg); }
+.pvis--photo .pvis__back { width: 64%; transform: translate(20%, -8%) rotate(4deg); }
+.pvis--photo .pvis__front img { max-height: 52vh; object-fit: cover; }
+
+/* ── Browser window ────────────────────────────────────────────── */
+.browser {
+  overflow: hidden;
+  background: #070707;
+  border: 1px solid var(--line-2);
+  border-radius: 8px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.8);
+}
+.browser__bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 28px;
+  padding: 0 10px;
+  background: var(--bg-3);
+  border-bottom: 1px solid var(--line);
+}
+.browser__dots { display: flex; gap: 5px; }
+.browser__dots i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); }
+.browser__url {
+  flex: 1;
+  max-width: 60%;
+  margin-inline: auto;
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: rgba(237, 236, 230, 0.06);
+  font: 400 0.5625rem / 1.2 var(--f-mono);
+  letter-spacing: 0.04em;
+  color: var(--fg-2);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.browser img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+}
+
+/* ── Phone ─────────────────────────────────────────────────────── */
+.phonef {
+  width: clamp(160px, 14vw, 224px);
+  aspect-ratio: 9 / 19.5;
+  padding: 6px;
+  border-radius: 32px;
+  background: #050505;
+  border: 1px solid var(--line-2);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.85);
+}
+.phonef__screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 26px;
+  background: var(--bg-3);
+  color: var(--fg);
+  display: flex;
+  flex-direction: column;
+}
+.phonef__screen > img { flex: 1; min-height: 0; width: 100%; object-fit: cover; object-position: top; }
+.phonef__status {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px 0;
+  font: 600 0.5625rem / 1 var(--f-text);
+}
+.phonef__island { width: 34%; height: 15px; border-radius: 10px; background: #050505; }
+.phonef__batt { width: 16px; height: 7px; border: 1px solid currentColor; border-radius: 2px; box-shadow: inset -5px 0 0 var(--bg-3), inset 0 0 0 9px currentColor; }
+.phonef__home {
+  position: absolute;
+  bottom: 6px;
+  left: 50%;
+  width: 36%;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--fg);
+  opacity: 0.6;
+  transform: translateX(-50%);
+}
+.phonef--ghost { opacity: 0.55; }
+
+/* Real screenshots carry their own status bar; hide the frame's. */
+.phonef__screen:has(> img) .phonef__status { position: absolute; inset: 0 0 auto; color: transparent; }
+.phonef__screen:has(> img) .phonef__status span:not(.phonef__island) { visibility: hidden; }
+.phonef__screen:has(> img) .phonef__island { margin: 0 auto; }
+.phonef__screen:has(> img) .phonef__home { display: none; }
+/* With a real screenshot the frame follows the image's shape. */
+.phonef--shot { aspect-ratio: auto; }
+.phonef--shot .phonef__screen { height: auto; }
+.phonef--shot .phonef__screen > img { height: 100%; object-fit: cover; object-position: center; }
+
+/* Launch screen, from real data only */
+.splash {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 14px 32px;
+  text-align: center;
+}
+.splash__icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 8px;
+  border-radius: 16px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  font: 800 1.125rem / 1 var(--f-display);
+}
+.splash__icon--img { overflow: hidden; background: var(--fg); }
+.splash__icon--img img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.splash__name { font: 700 1.0625rem / 1.1 var(--f-display); font-stretch: 90%; }
+.splash__role {
+  font: 400 0.5rem / 1.3 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+.splash__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; margin-top: 4px; }
+.splash__tags i {
+  padding: 2px 6px;
+  border: 1px solid var(--line-2);
+  border-radius: 99px;
+  font: normal 400 0.4375rem / 1.2 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+.splash__live {
+  position: absolute;
+  bottom: 18px;
+  left: 6px;
+  right: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  white-space: nowrap;
+  font: 400 0.4375rem / 1 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+.splash__live b { width: 5px; height: 5px; border-radius: 50%; background: var(--green); }
+.splash__live.is-other b { background: transparent; border: 1px solid currentColor; }
+
+/* Neutral placeholder screen on the back phone */
+.ghostui { display: flex; flex-direction: column; gap: 7px; padding: 24px 14px; }
+.ghostui i { height: 7px; border-radius: 4px; background: rgba(237, 236, 230, 0.08); }
+.ghostui__head { height: 16px !important; width: 60%; background: rgba(237, 236, 230, 0.16) !important; margin-bottom: 6px; }
+.ghostui__short { width: 55%; }
+.ghostui__card { height: 64px !important; margin: 4px 0; border: 1px solid var(--line); background: transparent !important; }
+
+/* ── Printed photo ─────────────────────────────────────────────── */
+.photo {
+  padding: 8px 8px 26px;
+  background: var(--fg);
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.85);
+}
+.photo img { display: block; width: 100%; height: auto; }
+
+/* ── Sizes ─────────────────────────────────────────────────────── */
+.pvis--detail .phonef { width: clamp(170px, 17vw, 240px); }
+.pvis--detail.pvis--web .pvis__front { width: 100%; transform: none; }
+.pvis--detail.pvis--web .pvis__back { display: none; }
+.pvis--detail.pvis--photo .pvis__front { width: 46%; }
+.pvis--detail.pvis--photo .pvis__front img { max-height: 420px; }
+
+/* Detail gallery */
+.gallery { display: grid; gap: 24px; }
+.gallery .browser img { aspect-ratio: auto; }
+.gallery__phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 32px 16px; background: var(--bg-2); border: 1px solid var(--line); }
+.gallery__phones .phonef { width: clamp(150px, 15vw, 200px); }
+.gallery__photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: start; }
+.gallery__photos .photo:first-child { grid-column: 1 / -1; }
+
+@media (max-width: 640px) {
+  .pvis--photo .pvis__front img { max-height: 220px; }
+  .gallery__photos { grid-template-columns: 1fr; }
+}

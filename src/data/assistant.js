@@ -92,6 +92,7 @@ export const LABELS = {
   process: 'How he works',
   offline: 'Offline-first',
   resume: 'Resume',
+  asip: 'Experience · ASIP',
 };
 
 /* Short question forms, used for the "related" chips after an answer. */
@@ -149,6 +150,7 @@ export const PROMPTS = {
   process: 'How does he work?',
   offline: 'Can he build for poor connectivity?',
   resume: 'Can I see his CV?',
+  asip: 'What is his role at ASIP?',
 };
 
 export const ENTRIES = [
@@ -240,7 +242,7 @@ export const ENTRIES = [
     id: 'brainbite',
     keywords: ['brainbite', 'netherlands', 'international', 'remote intern', 'europe', 'abroad'],
     answer:
-      "Three months as a remote iOS/Flutter Developer Intern at BrainBite, an EdTech company in the Netherlands, from November 2025 to January 2026. Flutter plus some native Swift on a children's learning platform.\n\nHe's careful not to call himself an iOS developer, he wrote some native Swift inside a mostly-Flutter codebase, which is a smaller claim.\n\nWhat he says he actually learned there wasn't Flutter. It was how to write what you'd done, what you were stuck on and what you'd do next, before anyone asked.",
+      "Four months as a remote iOS/Flutter Developer Intern at BrainBite, an EdTech company in the Netherlands, from October 2025 to January 2026. Flutter plus some native Swift on a children's learning platform.\n\nHe's careful not to call himself an iOS developer, he wrote some native Swift inside a mostly-Flutter codebase, which is a smaller claim.\n\nWhat he says he actually learned there wasn't Flutter. It was how to write what you'd done, what you were stuck on and what you'd do next, before anyone asked.",
   },
   {
     id: 'hire',
@@ -414,7 +416,7 @@ export const ENTRIES = [
     id: 'next',
     keywords: ['next', 'future', 'plans', 'goal', 'goals', 'ambition', 'after graduation', 'five years'],
     answer:
-      "Finish the degree in 2027 while keeping the Medco work going remotely. Keep maintaining Daga Taxi and ethio_dev_kit, and keep building upkeep, his first tool aimed at Flutter developers everywhere. He's also in the inaugural cohort of ASIP, a Pan-African fellowship, which started in September 2026.\n\nBeyond that he'd tell you he doesn't have a five-year plan and is suspicious of people who present one. The closest thing to a method he has came from a classmate: grab the opportunity first, decide afterwards, because you can't know what a thing leads to until you're already inside it.",
+      "Finish the degree in 2027 while keeping the Medco work going remotely. Keep maintaining Daga Taxi and ethio_dev_kit, and keep building upkeep, his first tool aimed at Flutter developers everywhere. He's also in the inaugural cohort of ASIP, a Pan-African fellowship, which started in September 2026, and leads its software track for October 2026.\n\nBeyond that he'd tell you he doesn't have a five-year plan and is suspicious of people who present one. The closest thing to a method he has came from a classmate: grab the opportunity first, decide afterwards, because you can't know what a thing leads to until you're already inside it.",
   },
   {
     id: 'bahirdar',
@@ -444,13 +446,13 @@ export const ENTRIES = [
     id: 'site',
     keywords: ['this site', 'this website', 'built this', 'portfolio built', 'stack of site', 'made this'],
     answer:
-      "He did. React and Vite, hand-written CSS, Framer Motion for the transitions.\n\nTwo details worth noticing: the phone in the header isn't a mockup, it renders from the same project data as the rest of the page. And the Ethiopian date inside it is computed live, which is the same problem his ethio_calendar package exists to solve. The site demonstrates the work rather than describing it.",
+      "He did. React and Vite, hand-written CSS, GSAP and Lenis for the motion.\n\nTwo details worth noticing: the phone beside the projects isn't a mockup, it renders from the same project data as the rest of the page. And the Ethiopian date in the header and on that phone is computed live, which is the same problem his ethio_calendar package exists to solve. The site demonstrates the work rather than describing it.",
   },
   {
     id: 'rates',
     keywords: ['rate', 'rates', 'cost', 'price', 'pricing', 'charge', 'budget', 'how much', 'salary', 'fee'],
     answer:
-      "He doesn't publish rates, and I wouldn't be the right place to find them anyway.\n\nEmail him with the scope and timeline and he'll come back with something specific rather than a number pulled from the air.",
+      "He doesn't publish a rate card. The price comes from the scope and the features, and it is different for every project.\n\nWhat you receive is the scope written out, what is included and what is not, and a price for that scope. You decide, and nothing starts until you have chosen. If you are not technical, he explains it in plain language so you understand what you are paying for before you say yes.\n\nFor a number on a real project, email him at abrahamaddisu217@gmail.com with what you need built.",
   },
   {
     id: 'process',
@@ -468,6 +470,12 @@ export const ENTRIES = [
     id: 'resume',
     keywords: ['resume', 'cv', 'download', 'pdf'],
     answer:
-      "There's a Download Resume button in the hero section at the top of this page.",
+      "There's a Resume link in the menu at the top of this page, and another in the Contact section at the bottom.",
+  },
+  {
+    id: 'asip',
+    keywords: ['asip', 'doubleyou', 'fellowship', 'fellow', 'lead', 'leadership', 'hall of fame', 'pan-african', 'african student impact'],
+    answer:
+      "He's a Fellow in the inaugural cohort of the African Student Impact Program (ASIP), Doubleyou Centre's pan-African fellowship of student builders from more than 18 African countries. It started in September 2026.\n\nFor October 2026 he's the programme's Software Development Lead. He set the software direction for the Develop and Test month with the founder and the leadership team, and the live build is the African Impact Hall of Fame.\n\nHis rule for it: what the cohort shows in public has to be what it has actually built.",
   },
 ];

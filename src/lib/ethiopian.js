@@ -52,3 +52,28 @@ export function formatEthiopian(date = new Date(), { latin = false } = {}) {
   const names = latin ? ETHIOPIAN_MONTHS_LATIN : ETHIOPIAN_MONTHS;
   return `${names[month - 1]} ${day}, ${year}`;
 }
+
+/* Now, as a clock on a wall in Addis Ababa reads it, whatever the
+   visitor's own time zone. Returns the wall-clock time and the
+   Gregorian and Ethiopian dates for that same moment. */
+export function addisNow(date = new Date()) {
+  const parts = Object.fromEntries(
+    new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Africa/Addis_Ababa',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    })
+      .formatToParts(date)
+      .map((p) => [p.type, p.value]),
+  );
+  const local = new Date(Number(parts.year), Number(parts.month) - 1, Number(parts.day));
+  return {
+    time: `${parts.hour}:${parts.minute}`,
+    gregorian: local.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+    ethiopian: formatEthiopian(local, { latin: true }),
+  };
+}

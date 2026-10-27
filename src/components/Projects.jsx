@@ -1,33 +1,86 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { FiExternalLink, FiX, FiArrowUpRight } from 'react-icons/fi';
-import { projects } from '../data/content';
-import useTilt from '../lib/useTilt';
-import useBodyLock from '../lib/useBodyLock';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowUpRight, ArrowRight, X } from 'lucide-react';
+import { projects, sectionCopy } from '../data/content';
+import { gsap, useReveal } from '../lib/motion';
+import useBodyLock, { usePresence } from '../lib/useBodyLock';
+import PhoneShowcase from './PhoneShowcase';
+import SectionHead from './SectionHead';
+import ProjectVisual, { Gallery, shortName } from './Device';
 import './Projects.css';
 
-function StatusBadge({ status }) {
-  if (!status) return null;
-  const cls =
-    status === 'Live' ? 'badge--live' : status === 'Internal' ? 'badge--internal' : 'badge--dev';
-  return <span className={`badge ${cls}`}>{status}</span>;
-}
+const copy = sectionCopy.projects;
+const pad = (n) => String(n).padStart(2, '0');
 
-const spring = { type: 'spring', stiffness: 320, damping: 34 };
+/* Featured projects get the full stage. The rest close the reel. */
+const SELECTED = projects.filter((p) => p.featured);
+const MORE = projects.filter((p) => !p.featured);
+const ORDER = [...SELECTED, ...MORE];
+const HORIZONTAL = '(min-width: 1024px) and (prefers-reduced-motion: no-preference)';
 
-function ProjectCard({ project, index, inView, onOpen }) {
-  const { ref, handlers, style } = useTilt();
+const ctaLabel = (link) =>
+  link.includes('play.google') ? 'View on Google Play'
+    : link.includes('pub.dev') ? 'View on pub.dev'
+    : link.includes('github') ? 'View source'
+    : link.includes('linkedin') ? 'View the post'
+    : 'View project';
+
+function Detail({ project, index, state, onClose }) {
+  const panel = useRef(null);
+  useBodyLock(state === 'open', onClose, panel);
 
   return (
-    <motion.article
-      ref={ref}
-      layoutId={`card-${project.title}`}
-      className="projects__card card card--tilt"
-      style={{ ...tint(hueFor(project.tags)), ...style }}
-      role="button"
-      tabIndex={0}
-      aria-label={`Open ${project.title}`}
+    <div
+      className="pdetail"
+      data-state={state}
+      data-modal
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="pdetail-title"
+      data-lenis-prevent
+      ref={panel}
+    >
+      <div className="pdetail__bar wrap">
+        <span className="t-label tabular">
+          ({pad(index + 1)}) <span className="pdetail__of">/ {pad(ORDER.length)}</span>
+        </span>
+        <button className="pdetail__close t-label" onClick={onClose}>
+          Close <X size={16} strokeWidth={1.5} aria-hidden="true" />
+        </button>
+      </div>
+
+      <div className="pdetail__grid wrap">
+        <div className="pdetail__text">
+          <p className="pdetail__meta t-label">
+            <span>{project.role}</span>
+            {project.status && <span className={`pstatus${project.status === 'Live' ? '' : ' is-other'}`}>{project.status}</span>}
+          </p>
+          <h2 className="pdetail__title" id="pdetail-title">{project.title}</h2>
+          <p className="t-body pdetail__desc">{project.description}</p>
+          <ul className="tags" aria-label="Built with">
+            {project.tags.map((t) => <li key={t}>{t}</li>)}
+          </ul>
+          {project.link && (
+            <a href={project.link} target="_blank" rel="noopener noreferrer" className="btn btn--solid pdetail__cta" data-magnetic="0.15">
+              {ctaLabel(project.link)} <ArrowUpRight size={15} strokeWidth={1.5} aria-hidden="true" />
+            </a>
+          )}
+        </div>
+
+        <div className="pdetail__media">
+          <div className="pdetail__hero">
+            <ProjectVisual project={project} size="detail" />
+          </div>
+          <Gallery project={project} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Card({ project, index, onOpen }) {
+  return (
+    <article
+      className="pcard"
       onClick={onOpen}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -35,189 +88,151 @@ function ProjectCard({ project, index, inView, onOpen }) {
           onOpen();
         }
       }}
-      initial={{ opacity: 0, y: 40 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay: index * 0.05, ease: [0.22, 1, 0.36, 1] }}
-      {...handlers}
+      role="button"
+      tabIndex={0}
+      data-cursor="Open"
+      aria-label={`Open ${project.title}`}
     >
-      <span className="card__sheen" aria-hidden="true" />
-
-      <div className="projects__card-top card__z1">
-        <span className="projects__index">{String(index + 1).padStart(2, '0')}</span>
-        <StatusBadge status={project.status} />
-        <span className="projects__open" aria-hidden="true">
-          <FiArrowUpRight size={15} />
-        </span>
+      <div className="pcard__copy">
+        <p className="pcard__meta t-label">
+          <span className="tabular">{pad(index + 1)}</span>
+          <span>{project.role}</span>
+          {project.status && <span className={`pstatus${project.status === 'Live' ? '' : ' is-other'}`}>{project.status}</span>}
+        </p>
+        <h3 className="pcard__title t-title-lg">{shortName(project.title)}</h3>
+        <p className="pcard__sum">{project.summary}</p>
+        <ul className="tags" aria-label="Built with">
+          {project.tags.slice(0, 3).map((t) => <li key={t}>{t}</li>)}
+        </ul>
       </div>
-
-      <motion.h3 layoutId={`title-${project.title}`} className="projects__card-title card__z2">
-        {project.title}
-      </motion.h3>
-      <p className="projects__card-role card__z1">{project.role}</p>
-      <p className="projects__card-desc">{project.description}</p>
-
-      <div className="projects__card-tags">
-        {project.tags.map((tag) => (
-          <span key={tag} className="pill">{tag}</span>
-        ))}
+      <div className="pcard__visual">
+        <ProjectVisual project={project} />
       </div>
-    </motion.article>
+    </article>
   );
 }
 
-/* Each project takes a hue from what it is actually made of, so the
-   colour carries information instead of decorating. Hue only, the
-   lightness and saturation stay fixed so nothing clashes with the
-   amber system accent. */
-const PALETTE = [
-  { hue: 265, match: ['AI', 'NLP', 'Machine Learning'] },          // violet, AI work
-  { hue: 162, match: ['Open Source', 'pub.dev', 'Dart'] },         // teal, open source
-  { hue: 14,  match: ['Embedded Systems', 'IoT', 'C++', 'Sensors'] }, // rust, hardware
-  { hue: 205, match: ['JSON', 'API Integration', 'Telegram API'] },  // blue, integrations
-  { hue: 38,  match: ['Kotlin', 'Flutter', 'Jetpack Compose'] },     // amber, mobile
-];
-
-function hueFor(tags = []) {
-  for (const { hue, match } of PALETTE) {
-    if (tags.some((t) => match.includes(t))) return hue;
-  }
-  return 38;
-}
-
-const tint = (h) => ({
-  '--p-hue': h,
-  '--p-color': `hsl(${h} 72% 62%)`,
-  '--p-soft': `hsl(${h} 72% 62% / 0.13)`,
-  '--p-line': `hsl(${h} 72% 62% / 0.38)`,
-});
-
 export default function Projects() {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.05 });
-  const [open, setOpen] = useState(null);
+  const root = useRef(null);
+  const pin = useRef(null);
+  const track = useRef(null);
+  const counter = useRef(null);
+  const bar = useRef(null);
+  const [openIndex, setOpenIndex] = useState(null);
+  const [shown, setShown] = useState(null);
+  const [mounted, state] = usePresence(openIndex !== null, 700);
 
-  useBodyLock(!!open, () => setOpen(null));
+  useEffect(() => {
+    if (openIndex !== null) setShown(openIndex);
+  }, [openIndex]);
 
-  /* The phone in the hero can ask us to open a project. */
+  /* The phone in the reel can ask us to open a project. */
   useEffect(() => {
     const onOpen = (e) => {
-      const match = projects.find((p) => p.title === e.detail);
-      if (match) setOpen(match);
+      const i = ORDER.findIndex((p) => p.title === e.detail);
+      if (i > -1) setOpenIndex(i);
     };
     window.addEventListener('open-project', onOpen);
     return () => window.removeEventListener('open-project', onOpen);
   }, []);
 
-  return (
-    <section className="projects section" id="projects" ref={ref}>
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="section-label">Projects</p>
-          <h2 className="section-title">What I've Built</h2>
-          <p className="section-subtitle">
-            Apps that shipped, packages people can install, and one piece of hardware
-            that spent a month measuring a television. Tap any of them to open it.
-          </p>
-        </motion.div>
+  useEffect(() => {
+    const mq = window.matchMedia(HORIZONTAL);
+    const apply = () => root.current?.classList.toggle('work--pin', mq.matches);
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, []);
 
-        <div className="projects__grid">
-          {projects.map((project, i) => (
-            <ProjectCard
-              key={project.title}
-              project={project}
-              index={i}
-              inView={inView}
-              onOpen={() => setOpen(project)}
+  useReveal(root, () => {
+    const mm = gsap.matchMedia();
+    mm.add(HORIZONTAL, () => {
+      const distance = () => track.current.scrollWidth - window.innerWidth;
+      const cards = gsap.utils.toArray('.pcard', track.current);
+      gsap.to(track.current, {
+        x: () => -distance(),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: pin.current,
+          pin: true,
+          scrub: 1,
+          start: 'top top',
+          end: () => `+=${distance()}`,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            if (bar.current) bar.current.style.transform = `scaleX(${self.progress})`;
+            let best = 0;
+            let bestD = Infinity;
+            cards.forEach((c, i) => {
+              const r = c.getBoundingClientRect();
+              const d = Math.abs(r.left + r.width / 2 - window.innerWidth / 2);
+              if (d < bestD) {
+                bestD = d;
+                best = i;
+              }
+            });
+            if (counter.current) counter.current.textContent = pad(Math.min(best + 1, SELECTED.length));
+          },
+        },
+      });
+    });
+  });
+
+  return (
+    <section className="work section" id="projects" ref={root} aria-labelledby="projects-title">
+      <div className="work__pin" ref={pin}>
+        <div className="work__hud wrap">
+          <span />
+          <p className="work__counter t-meta tabular" aria-hidden="true">
+            <b ref={counter}>01</b>
+            <span> / {pad(SELECTED.length)}</span>
+          </p>
+        </div>
+
+        <div className="work__track" ref={track}>
+          <div className="work__intro">
+            <SectionHead id="projects" copy={copy} titleId="projects-title" className="shead--compact" />
+            <div className="work__phone">
+              <PhoneShowcase />
+            </div>
+          </div>
+
+          {SELECTED.map((p) => (
+            <Card
+              key={p.title}
+              project={p}
+              index={ORDER.indexOf(p)}
+              onOpen={() => setOpenIndex(ORDER.indexOf(p))}
             />
           ))}
+
+          <div className="pmore">
+            <p className="t-label pmore__label">{copy.more}</p>
+            <ul>
+              {MORE.map((p) => (
+                <li key={p.title}>
+                  <button className="pmore__row" onClick={() => setOpenIndex(ORDER.indexOf(p))}>
+                    <span className="t-meta tabular">{pad(ORDER.indexOf(p) + 1)}</span>
+                    <span className="pmore__name">{shortName(p.title)}</span>
+                    <span className="pmore__sum">{p.summary}</span>
+                    <ArrowRight size={16} strokeWidth={1.5} aria-hidden="true" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <div className="work__progress wrap t-meta" aria-hidden="true">
+          <span>Start</span>
+          <div className="work__bar"><i ref={bar} /></div>
+          <span>End</span>
         </div>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            key={open.title}
-            data-modal
-            className="projects__overlay"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.22 }}
-            onClick={() => setOpen(null)}
-          >
-            <motion.article
-              layoutId={`card-${open.title}`}
-              className="projects__detail card"
-              style={tint(hueFor(open.tags))}
-              transition={spring}
-              onClick={(e) => e.stopPropagation()}
-              role="dialog"
-              aria-modal="true"
-              aria-label={open.title}
-            >
-              <button
-                className="projects__close"
-                onClick={() => setOpen(null)}
-                aria-label="Close"
-              >
-                <FiX size={18} />
-              </button>
-
-              <div className="projects__detail-aura" aria-hidden="true" />
-
-              <div className="projects__detail-top">
-                <StatusBadge status={open.status} />
-                <span className="projects__detail-role">{open.role}</span>
-              </div>
-
-              <motion.h3 layoutId={`title-${open.title}`} className="projects__detail-title">
-                {open.title}
-              </motion.h3>
-
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.12, duration: 0.3 }}
-              >
-                <p className="projects__detail-desc">{open.description}</p>
-
-                <p className="projects__detail-label">Built with</p>
-                <div className="projects__card-tags">
-                  {open.tags.map((tag, t) => (
-                    <motion.span
-                      key={tag}
-                      className="pill"
-                      initial={{ opacity: 0, y: 8, scale: 0.94 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      transition={{ delay: 0.2 + t * 0.05, duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-                    >
-                      {tag}
-                    </motion.span>
-                  ))}
-                </div>
-
-                {open.link && (
-                  <a
-                    href={open.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn--primary projects__detail-cta"
-                  >
-                    <FiExternalLink size={15} />
-                    {open.link.includes('play.google') ? 'View on Google Play'
-                      : open.link.includes('pub.dev') ? 'View on pub.dev'
-                      : open.link.includes('github') ? 'View source'
-                      : 'View project'}
-                  </a>
-                )}
-              </motion.div>
-            </motion.article>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && shown !== null && (
+        <Detail project={ORDER[shown]} index={shown} state={state} onClose={() => setOpenIndex(null)} />
+      )}
     </section>
   );
 }

@@ -26,12 +26,23 @@
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/favicon.png?v=2" />
 
-    <!-- Google Fonts: Inter -->
+    <meta name="theme-color" content="#0b0b0a" />
+    <script>
+      try {
+        if (localStorage.getItem('aa-theme') === 'light') {
+          document.documentElement.dataset.theme = 'light';
+          document.querySelector('meta[name="theme-color"]').content = '#f7f6f3';
+        }
+      } catch (e) {}
+    </script>
+
+    <!-- Type: Archivo (display), Geist (text), Geist Mono (chrome) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist:wght@300..700&family=Geist+Mono:wght@400..500&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <noscript><style>.pre{display:none!important}</style></noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

@@ -1,147 +1,187 @@
-import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
-import { Link } from 'react-scroll';
-import { FiMail, FiDownload, FiLinkedin, FiGithub, FiArrowDown } from 'react-icons/fi';
-import { FaTelegramPlane } from 'react-icons/fa';
+import { useEffect, useRef } from 'react';
+import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { personalInfo, projects } from '../data/content';
+import { gsap, reduced, scrollToId } from '../lib/motion';
+import { INTRO_EVENT } from './Preloader';
 import PhoneShowcase from './PhoneShowcase';
 import './Hero.css';
 
 const liveCount = projects.filter((p) => p.status === 'Live').length;
 
 const FACTS = [
-  { value: liveCount, label: 'projects shipped', count: true },
-  { value: 7, label: 'packages on pub.dev', count: true },
-  { value: 2027, label: 'graduating' },
+  { value: liveCount, label: 'Projects shipped' },
+  { value: 7, label: 'Packages on pub.dev' },
+  { value: 2, suffix: '+', label: 'Years shipping apps' },
 ];
 
-/* Counts up once on mount. The two small numbers are the credibility
-   markers, so they earn a moment of attention; the year does not. */
-function Tally({ to, enabled }) {
-  const [n, setN] = useState(enabled ? 0 : to);
+const HEAVY = 800;
+const LIGHT = 180;
+
+const Chars = ({ text, className }) => (
+  <span className={className} aria-hidden="true">
+    {[...text].map((c, i) => (
+      <span key={i} className={`hero__char${c === ' ' ? ' is-gap' : ''}`}>{c === ' ' ? '' : c}</span>
+    ))}
+  </span>
+);
+
+/* The name thins out around the pointer, one letter at a time, using
+   the font's weight axis. Pointer devices only. */
+function useWeightLens(root) {
   useEffect(() => {
-    if (!enabled) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setN(to);
-      return;
-    }
-    let raf = 0;
-    const start = performance.now();
-    const tick = (now) => {
-      const p = Math.min(1, (now - start) / 900);
-      setN(Math.round(to * (1 - Math.pow(1 - p, 3))));
-      if (p < 1) raf = requestAnimationFrame(tick);
+    const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const el = root.current;
+    if (!fine || reduced() || !el) return undefined;
+    const chars = [...el.querySelectorAll('.hero__char')];
+    let pointer = null;
+    let frame = 0;
+
+    const render = () => {
+      frame = 0;
+      const size = parseFloat(getComputedStyle(chars[0]).fontSize);
+      const radius = size * 0.9;
+      chars.forEach((c) => {
+        let w = HEAVY;
+        if (pointer) {
+          const r = c.getBoundingClientRect();
+          const d = Math.hypot(pointer.x - (r.left + r.width / 2), pointer.y - (r.top + r.height / 2));
+          const t = Math.max(0, 1 - d / radius);
+          w = HEAVY - (HEAVY - LIGHT) * t * t * (3 - 2 * t);
+        }
+        c.style.fontWeight = Math.round(w);
+      });
     };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [to, enabled]);
-  return <>{n}</>;
+    const onMove = (e) => {
+      pointer = { x: e.clientX, y: e.clientY };
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+    const onLeave = () => {
+      pointer = null;
+      if (!frame) frame = requestAnimationFrame(render);
+    };
+    el.addEventListener('pointermove', onMove);
+    el.addEventListener('pointerleave', onLeave);
+    return () => {
+      el.removeEventListener('pointermove', onMove);
+      el.removeEventListener('pointerleave', onLeave);
+      cancelAnimationFrame(frame);
+    };
+  }, [root]);
 }
 
 export default function Hero() {
-  const stagger = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.09, delayChildren: 0.15 } },
-  };
-  const up = {
-    hidden: { opacity: 0, y: 22 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+  const root = useRef(null);
+  const name = useRef(null);
+  const [first, last] = personalInfo.name.toUpperCase().split(' ');
+  useWeightLens(name);
+
+  useEffect(() => {
+    if (reduced()) return undefined;
+    const el = root.current;
+    let ctx;
+
+    /* Everything waits under the preloader, then plays in one breath. */
+    const setup = () => {
+      ctx = gsap.context(() => {
+        const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
+        tl.from('.hero__line .hero__char', { yPercent: 110, duration: 1.25, stagger: 0.028 })
+          .from('.hero__top > *', { y: -12, opacity: 0, duration: 0.9, stagger: 0.08 }, 0.4)
+          .from('.hero__rule', { scaleX: 0, duration: 1.4, ease: 'expo.inOut' }, 0.55)
+          .from('.hero__tagline, .hero__roles, .hero__ctas, .hero__facts', {
+            y: 24,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.08,
+          }, 0.7)
+          .from('.hero__stage', { y: 40, opacity: 0, duration: 1.2 }, 0.45);
+
+        el.querySelectorAll('[data-count]').forEach((n) => {
+          const o = { v: 0 };
+          tl.to(o, {
+            v: Number(n.dataset.count),
+            duration: 1.2,
+            ease: 'power3.out',
+            onUpdate: () => (n.textContent = Math.round(o.v)),
+          }, 1);
+        });
+
+        // Leaving: the name drifts up a little slower than the page.
+        gsap.to('.hero__name', {
+          yPercent: 22,
+          ease: 'none',
+          scrollTrigger: { trigger: el, start: 'top top', end: 'bottom top', scrub: true },
+        });
+      }, root);
+    };
+
+    if (window.__introDone) setup();
+    else window.addEventListener(INTRO_EVENT, setup, { once: true });
+
+    return () => {
+      window.removeEventListener(INTRO_EVENT, setup);
+      ctx?.revert();
+    };
+  }, []);
+
+  const toId = (id) => (e) => {
+    e.preventDefault();
+    scrollToId(id);
   };
 
   return (
-    <section className="hero" id="hero">
-      <div className="hero__grid-lines" aria-hidden="true" />
-      <div className="hero__bg-glow" aria-hidden="true" />
-
-      <motion.div
-        className="hero__inner container hero__inner--split"
-        variants={stagger}
-        initial="hidden"
-        animate="show"
-      >
-        <div className="hero__copy">
-        <motion.h1 className="hero__name" variants={up}>
-          I build <em>mobile apps</em><br />
-          people actually use.
-        </motion.h1>
-
-        <motion.p className="hero__lede" variants={up}>
-          {personalInfo.valueProp}
-        </motion.p>
-
-        <motion.div className="hero__ctas" variants={up}>
-          <a href={`mailto:${personalInfo.email}`} className="btn btn--primary" id="hero-contact-cta">
-            <FiMail size={15} /> Work with me
-          </a>
-          <a href={personalInfo.resumes.main} className="btn btn--secondary" download id="hero-download-resume">
-            <FiDownload size={15} /> Resume
-          </a>
-          <a
-            href={personalInfo.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero__icon-link"
-            aria-label="LinkedIn"
-            id="hero-linkedin"
-          >
-            <FiLinkedin size={17} />
-          </a>
-          <a
-            href={personalInfo.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero__icon-link"
-            aria-label="GitHub"
-            id="hero-github"
-          >
-            <FiGithub size={17} />
-          </a>
-          <a
-            href={personalInfo.telegram}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero__icon-link"
-            aria-label="Telegram"
-            id="hero-telegram"
-          >
-            <FaTelegramPlane size={17} />
-          </a>
-        </motion.div>
-
-        <motion.dl className="hero__facts" variants={up}>
-          {FACTS.map((f) => (
-            <div key={f.label}>
-              <dt><Tally to={f.value} enabled={!!f.count} /></dt>
-              <dd>{f.label}</dd>
-            </div>
-          ))}
-        </motion.dl>
-
-        <motion.div className="hero__marquee" variants={up} aria-hidden="true">
-          <div className="hero__marquee-track">
-            {[...personalInfo.roles, ...personalInfo.roles].map((r, i) => (
-              <span key={i}>{r}<i>/</i></span>
-            ))}
-          </div>
-        </motion.div>
+    <section className="hero" id="hero" ref={root} aria-label="Introduction">
+      <div className="hero__inner wrap">
+        <div className="hero__top">
+          <span className="status">
+            <span className="status__dot" aria-hidden="true" />
+            Available for work
+          </span>
+          <p className="t-meta hero__where">{personalInfo.location}</p>
         </div>
 
-        <motion.div className="hero__device" variants={up}>
-          <PhoneShowcase />
-        </motion.div>
-      </motion.div>
+        <div className="hero__main">
+          <div className="hero__copy">
+            <h1 className="hero__name" ref={name} aria-label={personalInfo.name}>
+              <Chars text={first} className="hero__line" />
+              <span className="hero__char is-gap" aria-hidden="true" />
+              <Chars text={last} className="hero__line hero__line--last" />
+            </h1>
 
-      <Link
-        to="about"
-        smooth
-        duration={600}
-        offset={-80}
-        className="hero__scroll"
-        tabIndex={0}
-        aria-label="Scroll to about"
-      >
-        <FiArrowDown size={14} />
-      </Link>
+            <span className="hero__rule" aria-hidden="true" />
+
+            <p className="hero__tagline">{personalInfo.valueProp}</p>
+
+            <ul className="hero__roles t-label" aria-label="Roles">
+              {personalInfo.roles.map((r) => <li key={r}>{r}</li>)}
+            </ul>
+
+            <div className="hero__ctas">
+              <a href="#projects" className="btn btn--solid" onClick={toId('projects')} data-magnetic="0.15">
+                See the work <ArrowDown size={15} strokeWidth={1.5} aria-hidden="true" />
+              </a>
+              <a href={`mailto:${personalInfo.email}`} className="btn" data-magnetic="0.15">
+                Email me <ArrowUpRight size={15} strokeWidth={1.5} aria-hidden="true" />
+              </a>
+            </div>
+
+            <dl className="hero__facts">
+              {FACTS.map((f) => (
+                <div key={f.label} className="hero__fact">
+                  <dd className="tabular">
+                    <span data-count={f.value}>{f.value}</span>
+                    {f.suffix}
+                  </dd>
+                  <dt className="t-meta">{f.label}</dt>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div className="hero__stage">
+            <PhoneShowcase />
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

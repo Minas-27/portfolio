@@ -1,129 +1,133 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { FiExternalLink, FiX } from 'react-icons/fi';
-import { Trophy, Medal, Microscope, Bot, Smartphone, Laptop, Rocket, Award, Image as ImageIcon } from 'lucide-react';
-import { certifications } from '../data/content';
-import useBodyLock from '../lib/useBodyLock';
+import { useRef, useState } from 'react';
+import { ArrowUpRight, X } from 'lucide-react';
+import { certifications, issuerLogos, sectionCopy } from '../data/content';
+import { useReveal } from '../lib/motion';
+import useBodyLock, { usePresence } from '../lib/useBodyLock';
+import SectionHead from './SectionHead';
 import './Certifications.css';
 
-/* Simple icon mapping by issuer keyword */
-function getIcon(issuer) {
-  const props = { size: 24, strokeWidth: 1.5, color: 'currentColor' };
-  
-  if (issuer.includes('Hult')) return <Trophy {...props} />;
-  if (issuer.includes('CoBuild')) return <Medal {...props} />;
-  if (issuer.includes('IBM')) return <Microscope {...props} />;
-  if (issuer.includes('Anthropic')) return <Bot {...props} />;
-  if (issuer.includes('Udacity')) return <Smartphone {...props} />;
-  if (issuer.includes('SLIIT')) return <Laptop {...props} />;
-  if (issuer.includes('Cambridge') || issuer.includes('i-Teams')) return <Rocket {...props} />;
-  return <Award {...props} />;
+const copy = sectionCopy.certifications;
+const pad = (n) => String(n).padStart(2, '0');
+
+function Viewer({ cert, state, onClose }) {
+  const box = useRef(null);
+  useBodyLock(state === 'open', onClose, box);
+
+  return (
+    <div
+      className="certview"
+      data-state={state}
+      data-modal
+      role="dialog"
+      aria-modal="true"
+      aria-label={cert.title}
+      data-lenis-prevent
+      ref={box}
+      onClick={onClose}
+    >
+      <div className="certview__bar wrap" onClick={(e) => e.stopPropagation()}>
+        <p className="t-label certview__caption">
+          {cert.title}
+          <span> / {cert.issuer}</span>
+        </p>
+        <button className="certview__close t-label" onClick={onClose}>
+          Close <X size={16} strokeWidth={1.5} aria-hidden="true" />
+        </button>
+      </div>
+      <figure className="certview__stage">
+        <img
+          src={cert.image}
+          alt={`Certificate: ${cert.title}, ${cert.issuer}`}
+          onClick={(e) => e.stopPropagation()}
+        />
+      </figure>
+    </div>
+  );
 }
 
 export default function Certifications() {
-  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
-  const [selectedImage, setSelectedImage] = useState(null);
-  useBodyLock(!!selectedImage, () => setSelectedImage(null));
+  const root = useRef(null);
+  const [selected, setSelected] = useState(null);
+  const [shown, setShown] = useState(null);
+  const [mounted, state] = usePresence(!!selected, 500);
+  useReveal(root);
+
+  const open = (cert) => {
+    setShown(cert);
+    setSelected(cert);
+  };
 
   return (
-    <section className="certifications section" id="certifications" ref={ref}>
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5 }}
-        >
-          <p className="section-label">Recognition</p>
-          <h2 className="section-title">The receipts</h2>
-          <p className="section-subtitle">
-            Competition results and certifications, with credential IDs where they exist,
-            so none of it has to be taken on trust.
-          </p>
-        </motion.div>
+    <section className="certs section" id="certifications" ref={root} aria-labelledby="certs-title">
+      <div className="wrap">
+        <SectionHead id="certifications" copy={copy} titleId="certs-title" />
 
-        <div className="certifications__grid">
-          {certifications.map((cert, i) => (
-            <motion.div
-              key={cert.title}
-              className="certifications__card card"
-              initial={{ opacity: 0, y: 30 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: i * 0.06, ease: [0.4, 0, 0.2, 1] }}
-            >
-              <span className="certifications__icon" aria-hidden="true">
-                {getIcon(cert.issuer)}
-              </span>
-              <div className="certifications__info">
-                <h3 className="certifications__title">{cert.title}</h3>
-                <p className="certifications__issuer">
-                  {cert.issuer}
-                  {cert.date && <span className="certifications__date"> · {cert.date}</span>}
-                </p>
-                {cert.detail && (
-                  <p className="certifications__detail">{cert.detail}</p>
-                )}
-                {cert.credentialId && (
-                  <p className="certifications__cred">ID {cert.credentialId}</p>
-                )}
-              </div>
-              {cert.link ? (
-                <a
-                  href={cert.link}
-                  className="certifications__view-link"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`View credential for ${cert.title}`}
-                >
-                  <FiExternalLink size={14} />
-                  <span>View credential</span>
-                </a>
-              ) : cert.image ? (
-                <button
-                  onClick={() => setSelectedImage(cert.image)}
-                  className="certifications__view-link"
-                  aria-label={`View certificate image for ${cert.title}`}
-                >
-                  <ImageIcon size={14} />
-                  <span>View certificate</span>
-                </button>
-              ) : null}
-            </motion.div>
-          ))}
-        </div>
+        <ol className="certs__list">
+          {certifications.map((cert, i) => {
+            const logo = cert.image ? null : issuerLogos[cert.issuer];
+            const action = cert.link ? (
+              <a
+                href={cert.link}
+                className="cert__action ulink"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View credential for ${cert.title}`}
+              >
+                Credential <ArrowUpRight size={12} strokeWidth={1.5} aria-hidden="true" />
+              </a>
+            ) : cert.image ? (
+              <button
+                className="cert__action ulink"
+                onClick={() => open(cert)}
+                aria-label={`View certificate image for ${cert.title}`}
+              >
+                Certificate <ArrowUpRight size={12} strokeWidth={1.5} aria-hidden="true" />
+              </button>
+            ) : null;
+
+            return (
+              <li key={cert.title} className="cert">
+                <span className="cert__index t-meta tabular" aria-hidden="true">{pad(i + 1)}</span>
+                <div className="cert__main">
+                  <h3 className="cert__title">
+                    {cert.image && (
+                      <button
+                        type="button"
+                        className="cert__thumb"
+                        onClick={() => open(cert)}
+                        aria-label={`Preview certificate for ${cert.title}`}
+                      >
+                        <img src={cert.image} alt="" />
+                      </button>
+                    )}
+                    {logo && (
+                      <a
+                        className="cert__thumb cert__thumb--logo"
+                        href={cert.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${cert.issuer} logo, view credential for ${cert.title}`}
+                      >
+                        <img src={logo} alt="" />
+                      </a>
+                    )}
+                    <span>{cert.title}</span>
+                  </h3>
+                  <p className="cert__meta t-meta">
+                    {cert.issuer}
+                    <span aria-hidden="true"> / </span>
+                    <span className="tabular">{cert.date}</span>
+                  </p>
+                  {cert.detail && <p className="cert__detail">{cert.detail}</p>}
+                </div>
+                {action}
+              </li>
+            );
+          })}
+        </ol>
       </div>
 
-      <AnimatePresence>
-        {selectedImage && (
-          <motion.div
-            key="cert-lightbox"
-            data-modal
-            className="certifications__modal-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setSelectedImage(null)}
-          >
-            <motion.div
-              className="certifications__modal-content"
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <button 
-                className="certifications__modal-close"
-                onClick={() => setSelectedImage(null)}
-                aria-label="Close certificate image"
-              >
-                <FiX size={24} />
-              </button>
-              <img src={selectedImage} alt="Certificate view" className="certifications__modal-image" />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {mounted && shown && <Viewer cert={shown} state={state} onClose={() => setSelected(null)} />}
     </section>
   );
 }

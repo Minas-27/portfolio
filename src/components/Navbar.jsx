@@ -1,132 +1,200 @@
-import { useState, useEffect } from 'react';
-import { Link } from 'react-scroll';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FiSun, FiMoon, FiMenu, FiX } from 'react-icons/fi';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowDown, ArrowUpRight, Moon, Sun } from 'lucide-react';
+import { personalInfo } from '../data/content';
+import { NAV } from '../lib/sections';
+import { scrollToId, gsap, reduced } from '../lib/motion';
+import { applyTheme, currentTheme } from '../lib/theme';
+import useBodyLock from '../lib/useBodyLock';
+import Clock from './Clock';
 import './Navbar.css';
 
-const navItems = [
-  { to: 'hero', label: 'Home' },
-  { to: 'about', label: 'About' },
-  { to: 'services', label: 'Services' },
-  { to: 'experience', label: 'Experience' },
-  { to: 'projects', label: 'Projects' },
-  { to: 'certifications', label: 'Certifications' },
-  { to: 'contact', label: 'Contact' },
-];
+const typing = (el) =>
+  el instanceof Element && !!el.closest('input, textarea, select, [contenteditable="true"]');
 
-export default function Navbar({ theme, toggleTheme }) {
+function go(e, id, after) {
+  e?.preventDefault();
+  after?.();
+  // Let the menu finish closing before the page starts moving.
+  setTimeout(() => scrollToId(id), after ? 420 : 0);
+}
+
+function ThemeToggle({ theme, onToggle, labeled = false }) {
+  const light = theme === 'light';
+  return (
+    <button
+      type="button"
+      className={`nav__theme${labeled ? ' nav__theme--labeled' : ''}`}
+      aria-pressed={light}
+      aria-label={light ? 'Switch to dark theme' : 'Switch to light theme'}
+      onClick={onToggle}
+    >
+      {light ? <Moon size={14} strokeWidth={1.5} aria-hidden="true" /> : <Sun size={14} strokeWidth={1.5} aria-hidden="true" />}
+      {labeled && <span>{light ? 'Dark' : 'Light'}</span>}
+    </button>
+  );
+}
+
+export default function Navbar() {
+  const [active, setActive] = useState(null);
+  const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [theme, setTheme] = useState(currentTheme);
+  const toggleTheme = () => setTheme(applyTheme(theme === 'light' ? 'dark' : 'light'));
+  const overlay = useRef(null);
 
+  useBodyLock(open, () => setOpen(false), overlay);
+
+  /* Background once off the top; hide on the way down, back on the way up. */
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    let last = window.scrollY;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const y = window.scrollY;
+      setScrolled(y > 24);
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > window.innerHeight * 0.8);
+        last = y;
+      }
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(frame);
+    };
   }, []);
 
-  return (
-    <motion.nav
-      className={`navbar ${scrolled ? 'navbar--scrolled' : ''}`}
-      initial={{ y: -80 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-      role="navigation"
-      aria-label="Main navigation"
-    >
-      <div className="navbar__inner container">
-        <Link to="hero" smooth duration={600} className="navbar__logo" tabIndex={0} aria-label="Go to top">
-          <span className="navbar__logo-mark">A</span>
-          <span className="navbar__logo-text">braham</span>
-        </Link>
+  /* Current section: whichever one crosses the middle of the screen. */
+  useEffect(() => {
+    const els = ['hero', ...NAV.map((n) => n.id)].map((id) => document.getElementById(id)).filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((en) => en.isIntersecting && setActive(en.target.id)),
+      { rootMargin: '-50% 0px -50% 0px' },
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
 
-        {/* Desktop nav */}
-        <ul className="navbar__links" role="list">
-          {navItems.map((item) => (
-            <li key={item.to}>
-              <Link
-                to={item.to}
-                spy
-                smooth
-                offset={-80}
-                duration={600}
-                activeClass="navbar__link--active"
-                className="navbar__link"
-                tabIndex={0}
+  /* Shortcuts: H for the top, then the first letter of each section.
+     Never while typing, never with a modifier, never over a dialog. */
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.metaKey || e.ctrlKey || e.altKey || e.repeat) return;
+      if (typing(e.target) || document.querySelector('[data-modal]')) return;
+      const k = e.key.toUpperCase();
+      const id = k === 'H' ? 'hero' : NAV.find((n) => n.key === k)?.id;
+      if (!id) return;
+      e.preventDefault();
+      scrollToId(id);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
+
+  /* Menu: the rows rise one after another. */
+  useEffect(() => {
+    if (!open || reduced() || !overlay.current) return undefined;
+    const ctx = gsap.context(() => {
+      gsap.from('.menu__item', { yPercent: 110, duration: 0.9, ease: 'expo.out', stagger: 0.05, delay: 0.25 });
+      gsap.from('.menu__foot > *', { opacity: 0, y: 12, duration: 0.8, ease: 'expo.out', stagger: 0.06, delay: 0.5 });
+    }, overlay);
+    return () => ctx.revert();
+  }, [open]);
+
+  const cls = ['nav', scrolled && 'is-scrolled', hidden && !open && 'is-hidden', open && 'is-open']
+    .filter(Boolean)
+    .join(' ');
+
+  return (
+    <>
+      <header className={cls} onFocusCapture={() => setHidden(false)}>
+        <div className="nav__inner">
+          <a className="nav__word" href="#hero" onClick={(e) => go(e, 'hero')} aria-label={`${personalInfo.name}, back to top`}>
+            Abraham <span>Addisu</span>
+          </a>
+
+          <Clock className="nav__clock" />
+
+          <nav className="nav__links" aria-label="Main">
+            {NAV.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`nav__link${active === item.id ? ' is-active' : ''}`}
+                aria-current={active === item.id ? 'true' : undefined}
+                aria-keyshortcuts={item.key}
+                title={`${item.label} (${item.key})`}
+                onClick={(e) => go(e, item.id)}
               >
                 {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
+              </a>
+            ))}
+            <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            <a href={personalInfo.resumes.main} download="Abraham-Addisu-CV.pdf" className="nav__cv">
+              Resume <ArrowDown size={13} strokeWidth={1.5} aria-hidden="true" />
+            </a>
+          </nav>
 
-        <div className="navbar__actions">
-          <button
-            className="navbar__theme-toggle"
-            onClick={toggleTheme}
-            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            id="theme-toggle"
-          >
-            <AnimatePresence mode="wait">
-              {theme === 'light' ? (
-                <motion.span key="moon" initial={{ rotate: -90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: 90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                  <FiMoon size={18} />
-                </motion.span>
-              ) : (
-                <motion.span key="sun" initial={{ rotate: 90, opacity: 0 }} animate={{ rotate: 0, opacity: 1 }} exit={{ rotate: -90, opacity: 0 }} transition={{ duration: 0.2 }}>
-                  <FiSun size={18} />
-                </motion.span>
-              )}
-            </AnimatePresence>
-          </button>
+          <ThemeToggle theme={theme} onToggle={toggleTheme} />
 
           <button
-            className="navbar__hamburger"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle mobile menu"
-            aria-expanded={mobileOpen}
-            id="mobile-menu-toggle"
+            className="nav__burger t-label"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="menu"
           >
-            {mobileOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+            <span className="nav__burger-text">{open ? 'Close' : 'Menu'}</span>
+            <span className={`nav__burger-icon${open ? ' is-x' : ''}`} aria-hidden="true"><i /><i /></span>
           </button>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile menu */}
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            className="navbar__mobile"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          >
-            <ul role="list">
-              {navItems.map((item, i) => (
-                <motion.li
-                  key={item.to}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <Link
-                    to={item.to}
-                    spy
-                    smooth
-                    offset={-72}
-                    duration={600}
-                    className="navbar__mobile-link"
-                    onClick={() => setMobileOpen(false)}
-                    tabIndex={0}
-                  >
-                    {item.label}
-                  </Link>
-                </motion.li>
-              ))}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.nav>
+      <div
+        id="menu"
+        className={`menu${open ? ' is-open' : ''}`}
+        ref={overlay}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu"
+        data-lenis-prevent
+        aria-hidden={!open}
+        inert={!open}
+        {...(open ? { 'data-modal': '' } : {})}
+      >
+        <nav className="menu__list" aria-label="Main">
+          {NAV.map((item) => (
+            <a
+              key={item.id}
+              href={`#${item.id}`}
+              className={`menu__row${active === item.id ? ' is-active' : ''}`}
+              onClick={(e) => go(e, item.id, () => setOpen(false))}
+            >
+              <span className="menu__item">
+                <span className="menu__index t-meta tabular">{item.index}</span>
+                <span className="menu__label">{item.label}</span>
+              </span>
+            </a>
+          ))}
+        </nav>
+
+        <div className="menu__foot">
+          <a href={`mailto:${personalInfo.email}`} className="ulink">{personalInfo.email}</a>
+          <div className="menu__links t-label">
+            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={12} aria-hidden="true" /></a>
+            <a href={personalInfo.github} target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight size={12} aria-hidden="true" /></a>
+            <a href={personalInfo.telegram} target="_blank" rel="noopener noreferrer">Telegram <ArrowUpRight size={12} aria-hidden="true" /></a>
+            <a href={personalInfo.resumes.main} download="Abraham-Addisu-CV.pdf">Resume <ArrowDown size={12} aria-hidden="true" /></a>
+            <ThemeToggle theme={theme} onToggle={toggleTheme} labeled />
+          </div>
+          <Clock />
+        </div>
+      </div>
+    </>
   );
 }
