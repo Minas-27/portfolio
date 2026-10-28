@@ -26,6 +26,8 @@
   margin-top: 12px;
 }
 .about__body { grid-column: 6 / -1; display: flex; flex-direction: column; gap: clamp(56px, 7vw, 96px); }
+.about__lead { display: flex; flex-direction: column; gap: 18px; }
+.about__edu { color: var(--fg-2); }
 .about__statement {
   font-size: clamp(1.5rem, 2.7vw, 2.625rem);
   line-height: 1.22;

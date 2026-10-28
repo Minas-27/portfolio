@@ -21,7 +21,7 @@ const ctaLabel = (link) =>
   link.includes('play.google') ? 'View on Google Play'
     : link.includes('pub.dev') ? 'View on pub.dev'
     : link.includes('github') ? 'View source'
-    : link.includes('linkedin') ? 'View the post'
+    : link.includes('linkedin') ? 'View the LinkedIn post'
     : 'View project';
 
 function Detail({ project, index, state, onClose }) {

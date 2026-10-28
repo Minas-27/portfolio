@@ -38,11 +38,11 @@ export const personalInfo = {
   github: 'https://github.com/Minas-27',
   upwork: 'https://www.upwork.com/freelancers/~0142f1cf79221e6871',
   roles: [
-    'Mobile App Developer',
+    'Mobile & Full Stack Engineer',
     'Android Engineer (Kotlin & Compose)',
     'Flutter Developer',
-    'Full Stack Engineer',
   ],
+  education: 'B.Sc. in Software Engineering, Bahir Dar University, expected 2027.',
   valueProp:
     'I build mobile apps people rely on, Android and Flutter, from the first screen to the store listing. Healthcare, insurance and transport, built for markets where a stable connection is not a given.',
   // The first line of valueProp, for the hero.
@@ -110,7 +110,7 @@ export const sectionCopy = {
     title: "Let's build your next app",
     // The closing headline: the second part is set in the accent.
     band: ["Let's build", 'your next app'],
-    subtitle: 'Open to remote work. Have a project in mind? Let\'s talk.',
+    subtitle: 'Open to freelance projects. Have a project in mind? Let\'s talk.',
   },
 };
 
@@ -328,8 +328,8 @@ export const projects = [
     role: 'Lead AI App Developer',
     description:
       'AI-driven hiring platform supporting English and Amharic; candidates can interview in their native language. Replaces manual CV screening with transparent, LLM-based evaluations and a scoring audit trail for recruiters. Handles bilingual audio/text processing and complex app state.',
-    tags: ['AI', 'NLP', 'API Integration', 'Mobile App Development'],
-    status: 'Live',
+    tags: ['Flutter', 'Dart', 'Google Gemini', 'ElevenLabs', 'Voiceflow', 'Addis AI'],
+    status: 'Open source',
     link: 'https://github.com/Minas-27/HireAI',
     icon: hireaiIcon,
     images: [
@@ -355,7 +355,7 @@ export const projects = [
     description:
       'Offline-first civic directory app for Addis Ababa: 100% offline local persistence layer, bilingual Amharic/English smart search, zero-latency filtering, maps integration.',
     tags: ['Kotlin', 'Room', 'Google Maps', 'Offline-first'],
-    status: 'Live',
+    status: 'Open source',
     link: 'https://github.com/Minas-27/Addis-360',
     icon: addisIcon,
     images: [
@@ -369,7 +369,7 @@ export const projects = [
     description:
       'Mobile-first inventory management app replacing manual warehouse paper logs; integrates directly with Odoo ERP via JSON-RPC, letting warehouse staff scan products and update stock levels in real time.',
     tags: ['Flutter', 'Dart', 'JSON', 'API Integration'],
-    status: 'Live',
+    status: 'Open source',
     link: 'https://github.com/Minas-27/Mobile-Inventory-Scanner',
   },
   {
@@ -379,7 +379,7 @@ export const projects = [
     description:
       'High-performance productivity app for instant, fully offline Optical Character Recognition; extracts text from live camera feed or gallery images with no internet connection required, using on-device ML.',
     tags: ['Flutter', 'Dart', 'Mobile App Development', 'UI Design'],
-    status: 'Live',
+    status: 'Open source',
     link: 'https://github.com/Minas-27/Abroid-Scan',
   },
   {
@@ -389,7 +389,7 @@ export const projects = [
     description:
       'Native Android productivity app that transforms unstructured Telegram Saved Messages into an organized, searchable archive and daily journal. Built with Kotlin + Jetpack Compose, Clean Architecture and MVVM; integrates TDLib for Telegram API access and Room for fast offline media/document access. Material 3 UI, in-app media playback, advanced local search.',
     tags: ['Kotlin', 'Jetpack Compose', 'SQLite', 'Telegram API'],
-    status: 'Live',
+    status: 'Private',
     // Repo is private (404 publicly); restore the link if it is made public.
     link: null,
   },

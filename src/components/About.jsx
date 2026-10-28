@@ -28,9 +28,12 @@ export default function About() {
           </figure>
 
           <div className="about__body">
-            {personalInfo.about.map((para) => (
-              <p key={para.slice(0, 24)} className="about__statement js-lines">{para}</p>
-            ))}
+            <div className="about__lead">
+              {personalInfo.about.map((para) => (
+                <p key={para.slice(0, 24)} className="about__statement js-lines">{para}</p>
+              ))}
+              <p className="about__edu t-meta">{personalInfo.education}</p>
+            </div>
 
             <div className="skills">
               <h3 className="t-label skills__title">{copy.skills}</h3>

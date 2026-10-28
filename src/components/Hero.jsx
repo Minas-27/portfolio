@@ -134,7 +134,7 @@ export default function Hero() {
         <div className="hero__top">
           <span className="status">
             <span className="status__dot" aria-hidden="true" />
-            Available for work
+            Open to freelance projects
           </span>
           <p className="t-meta hero__where">{personalInfo.location}</p>
         </div>
