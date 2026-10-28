@@ -15,7 +15,7 @@ function go(e, id, after) {
   e?.preventDefault();
   after?.();
   // Let the menu finish closing before the page starts moving.
-  setTimeout(() => scrollToId(id), after ? 420 : 0);
+  setTimeout(() => scrollToId(id), after ? 280 : 0);
 }
 
 function ThemeToggle({ theme, onToggle, labeled = false }) {
@@ -100,8 +100,8 @@ export default function Navbar() {
   useEffect(() => {
     if (!open || reduced() || !overlay.current) return undefined;
     const ctx = gsap.context(() => {
-      gsap.from('.menu__item', { yPercent: 110, duration: 0.9, ease: 'expo.out', stagger: 0.05, delay: 0.25 });
-      gsap.from('.menu__foot > *', { opacity: 0, y: 12, duration: 0.8, ease: 'expo.out', stagger: 0.06, delay: 0.5 });
+      gsap.from('.menu__item', { y: 8, opacity: 0, duration: 0.4, ease: 'power2.out', stagger: 0.03, delay: 0.08 });
+      gsap.from('.menu__foot > *', { opacity: 0, y: 6, duration: 0.35, ease: 'power2.out', stagger: 0.04, delay: 0.16 });
     }, overlay);
     return () => ctx.revert();
   }, [open]);
@@ -165,34 +165,37 @@ export default function Navbar() {
         data-lenis-prevent
         aria-hidden={!open}
         inert={!open}
+        onClick={() => setOpen(false)}
         {...(open ? { 'data-modal': '' } : {})}
       >
-        <nav className="menu__list" aria-label="Main">
-          {NAV.map((item) => (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              className={`menu__row${active === item.id ? ' is-active' : ''}`}
-              onClick={(e) => go(e, item.id, () => setOpen(false))}
-            >
-              <span className="menu__item">
-                <span className="menu__index t-meta tabular">{item.index}</span>
-                <span className="menu__label">{item.label}</span>
-              </span>
-            </a>
-          ))}
-        </nav>
+        <div className="menu__sheet" onClick={(e) => e.stopPropagation()}>
+          <nav className="menu__list" aria-label="Main">
+            {NAV.map((item) => (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                className={`menu__row${active === item.id ? ' is-active' : ''}`}
+                onClick={(e) => go(e, item.id, () => setOpen(false))}
+              >
+                <span className="menu__item">
+                  <span className="menu__index t-meta tabular">{item.index}</span>
+                  <span className="menu__label">{item.label}</span>
+                </span>
+              </a>
+            ))}
+          </nav>
 
-        <div className="menu__foot">
-          <a href={`mailto:${personalInfo.email}`} className="ulink">{personalInfo.email}</a>
-          <div className="menu__links t-label">
-            <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={12} aria-hidden="true" /></a>
-            <a href={personalInfo.github} target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight size={12} aria-hidden="true" /></a>
-            <a href={personalInfo.telegram} target="_blank" rel="noopener noreferrer">Telegram <ArrowUpRight size={12} aria-hidden="true" /></a>
-            <a href={personalInfo.resumes.main} download="Abraham-Addisu-CV.pdf">Resume <ArrowDown size={12} aria-hidden="true" /></a>
-            <ThemeToggle theme={theme} onToggle={toggleTheme} labeled />
+          <div className="menu__foot">
+            <div className="menu__links t-label">
+              <a href={`mailto:${personalInfo.email}`}>Email <ArrowUpRight size={12} aria-hidden="true" /></a>
+              <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <ArrowUpRight size={12} aria-hidden="true" /></a>
+              <a href={personalInfo.github} target="_blank" rel="noopener noreferrer">GitHub <ArrowUpRight size={12} aria-hidden="true" /></a>
+              <a href={personalInfo.telegram} target="_blank" rel="noopener noreferrer">Telegram <ArrowUpRight size={12} aria-hidden="true" /></a>
+              <a href={personalInfo.resumes.main} download="Abraham-Addisu-CV.pdf">Resume <ArrowDown size={12} aria-hidden="true" /></a>
+              <ThemeToggle theme={theme} onToggle={toggleTheme} labeled />
+            </div>
+            <Clock />
           </div>
-          <Clock />
         </div>
       </div>
     </>
