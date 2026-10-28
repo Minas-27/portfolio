@@ -205,6 +205,15 @@
 .gallery .browser img { aspect-ratio: auto; }
 .gallery__phones { display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; padding: 32px 16px; background: var(--bg-2); border: 1px solid var(--line); }
 .gallery__phones .phonef { width: clamp(150px, 15vw, 200px); }
+.gallery__proofs { display: grid; gap: 20px; justify-items: start; }
+.gallery__proofs .photo {
+  max-width: min(100%, 820px);
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
+.gallery__proofs .photo--portrait { max-width: min(100%, 360px); }
 .gallery__photos { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; align-items: start; }
 .gallery__photos .photo:first-child { grid-column: 1 / -1; }
 

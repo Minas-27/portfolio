@@ -6,6 +6,9 @@
 import profilePhotoImg from '../assets/profile-photo.webp';
 import hultOnCampusImg from '../assets/hult-on-campus.webp';
 import cobuildHackathonImg from '../assets/cobuild-hackathon.webp';
+import faydaCobuildPrize from '../assets/projects/fayda-cobuild-prize.webp';
+import faydaHultBahirdar from '../assets/projects/fayda-hult-bahirdar.webp';
+import faydaHultSeven from '../assets/projects/fayda-hult-seven-teams.webp';
 import devquestImg from '../assets/devquest.webp';
 import iteamsInnovationImg from '../assets/iteams-innovation.webp';
 import wellnessImg from '../assets/wellness.webp';
@@ -346,6 +349,11 @@ export const projects = [
     tags: ['AI', 'Kotlin', 'API Integration', 'UI Design'],
     status: 'Pitched', // built and pitched, never deployed
     link: 'https://www.linkedin.com/posts/abraham-addisu_cobuildabrethiopiaabraiabrhackathonabr2025-activity-7402093729572126720-lDga?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFThwF0BWrohJRWKElATtOS8yq3FnorcHPY',
+    images: [
+      { src: faydaCobuildPrize, alt: 'Abraham Addisu with the CoBuild Ethiopia AI Hackathon trophy and 2nd place certificate', device: 'proof', w: 337, h: 576 },
+      { src: faydaHultBahirdar, alt: 'Hult Prize Ethiopia 2026, Bahir Dar University: Nova Tech (FaydaHealth), Ruth Gizat, Abraham Addisu, Tewodros Gebeyaw and Yonatan Aysheshim', device: 'proof', w: 1024, h: 724 },
+      { src: faydaHultSeven, alt: 'Hult Prize Ethiopia 2026 poster of the seven on-campus winning teams, ahead of the national competition on 25 April', device: 'proof', w: 1024, h: 724 },
+    ],
   },
   {
     title: 'Addis 360',

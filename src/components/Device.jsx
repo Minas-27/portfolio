@@ -149,9 +149,17 @@ export function Gallery({ project }) {
   const web = shots.filter((i) => i.device === 'browser').slice(1);
   const phones = shots.filter((i) => i.device === 'phone').slice(2);
   const photos = shots.filter((i) => i.device === 'photo').slice(2);
-  if (!web.length && !phones.length && !photos.length) return null;
+  const proofs = shots.filter((i) => i.device === 'proof');
+  if (!web.length && !phones.length && !photos.length && !proofs.length) return null;
   return (
     <div className="gallery">
+      {proofs.length > 0 && (
+        <div className="gallery__proofs">
+          {proofs.map((img) => (
+            <PhotoFrame key={img.alt} image={img} className={img.h > img.w ? 'photo--portrait' : ''} />
+          ))}
+        </div>
+      )}
       {web.map((img) => <BrowserFrame key={img.alt} image={img} />)}
       {photos.length > 0 && (
         <div className="gallery__photos">
