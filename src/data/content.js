@@ -53,7 +53,7 @@ export const personalInfo = {
   resumes: {
     // Bump the version when the PDF changes, otherwise browsers and the
     // CDN keep serving the cached old one from the same filename.
-    main: '/assets/abraham_addisu_resume.pdf?v=2026-10-27',
+    main: '/assets/abraham_addisu_resume.pdf?v=2026-10-28',
   },
   profilePhoto: profilePhotoImg,
   // Short on purpose: the page says who, the detail lives in the CV and the chat.

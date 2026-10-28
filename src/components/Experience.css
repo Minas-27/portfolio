@@ -102,7 +102,28 @@
 }
 .xp__line svg { flex: 0 0 auto; }
 
+.xp__roles { margin-top: 16px; }
+.xp__role--nested + .xp__role--nested {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.xp__role-title {
+  margin-bottom: 6px;
+  font: 600 clamp(1.05rem, 1.5vw, 1.25rem) / 1.2 var(--f-display);
+  font-stretch: 92%;
+  letter-spacing: -0.02em;
+}
+.xp__role--nested .xp__type { margin: 0 0 8px; }
+.xp__role-date {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  color: var(--fg-2);
+}
 .xp__desc { margin-top: 14px; }
+.xp__role--nested .xp__desc { margin-top: 8px; }
 .xp__desc .expand__summary { font-size: 0.9375rem; }
 
 @media (min-width: 960px) {
