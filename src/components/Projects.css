@@ -170,6 +170,7 @@
   text-transform: uppercase;
   overflow-wrap: anywhere;
 }
+.pdetail__desc { white-space: pre-line; }
 .pdetail__cta { align-self: flex-start; }
 
 .pdetail__media {

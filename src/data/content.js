@@ -338,11 +338,11 @@ export const projects = [
   },
   {
     title: 'FaydaHealth: Unified Medical History on Fayda ID',
-    summary: 'Health-record concept on Fayda ID. 2nd place, CoBuild Ethiopia AI Hackathon 2025.',
+    summary: 'Health records on Fayda ID, pitched with Nova Tech. CoBuild 2nd place, Hult Prize campus winner, top 8 of 600+ at the Ethiopia national final.',
     featured: true,
     role: 'Developer, team of four (Nova Tech)',
     description:
-      'Health record concept designed to unify fragmented medical histories against Ethiopia\'s national Fayda ID, with AI-assisted preliminary triage and an Amharic chatbot demonstrated in the pitch build. Built and pitched, not deployed. 2nd place at the CoBuild Ethiopia AI Hackathon 2025, Hult Prize campus winner, and one of the top 8 teams of 600+ at the Ethiopian national final.',
+      'A team of four, Nova Tech, took FaydaHealth through three rounds. 2nd place at the CoBuild Ethiopia AI Hackathon 2025. Hult Prize on-campus winner at Bahir Dar University. Then one of the top 8 of 600+ teams at the Hult Prize Ethiopia national final.\n\nThe idea is one medical history per person, keyed to Ethiopia\'s national Fayda ID, with AI-assisted preliminary triage and an Amharic chatbot in the pitch build. Built and pitched, not deployed.',
     tags: ['AI', 'Kotlin', 'API Integration', 'UI Design'],
     status: 'Pitched', // built and pitched, never deployed
     link: 'https://www.linkedin.com/posts/abraham-addisu_cobuildabrethiopiaabraiabrhackathonabr2025-activity-7402093729572126720-lDga?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFThwF0BWrohJRWKElATtOS8yq3FnorcHPY',
@@ -423,8 +423,8 @@ export const issuerLogos = {
 };
 
 export const certifications = [
-  { title: 'Hult Prize 2026: Ethiopia National Finalist', issuer: 'Hult Prize Foundation', date: 'Jun 2026', detail: 'Top 8 of 600+ university teams', credentialId: '99956319-0b92-47d7-bacc-ce05e78a7a79', link: 'https://credsverse.com/credentials/99956319-0b92-47d7-bacc-ce05e78a7a79' },
-  { title: 'Hult Prize 2026: On-Campus Competition Winner', issuer: 'Hult Prize Foundation', date: 'Feb 2026', detail: 'Bahir Dar University, with Nova Tech', image: hultOnCampusImg },
+  { title: 'Hult Prize 2026: Ethiopia National Finalist', issuer: 'Hult Prize Foundation', date: 'Jun 2026', detail: 'FaydaHealth, with Nova Tech. Top 8 of 600+ university teams', credentialId: '99956319-0b92-47d7-bacc-ce05e78a7a79', link: 'https://credsverse.com/credentials/99956319-0b92-47d7-bacc-ce05e78a7a79' },
+  { title: 'Hult Prize 2026: On-Campus Competition Winner', issuer: 'Hult Prize Foundation', date: 'Feb 2026', detail: 'FaydaHealth, Bahir Dar University, with Nova Tech', image: hultOnCampusImg },
   { title: 'CoBuild Ethiopia AI Hackathon 2025: 2nd Place', issuer: 'Entrepreneurship Development Institute (EDI), Ethiopia', date: 'Nov 2025', detail: 'FaydaHealth', image: cobuildHackathonImg },
   { title: 'Global and Planetary Security', issuer: 'One Young World Academy', date: 'Sep 2026', detail: '', credentialId: 'e35919ff-5879-4604-8eb3-910d64775ca1', link: 'https://www.credly.com/badges/e35919ff-5879-4604-8eb3-910d64775ca1/public_url' },
   { title: 'AI Fluency: Framework & Foundations', issuer: 'Anthropic', date: 'Jul 2026', detail: '', credentialId: 'bngf5pd9g4r4', link: 'https://verify.skilljar.com/c/bngf5pd9g4r4' },
