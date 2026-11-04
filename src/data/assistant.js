@@ -396,7 +396,7 @@ export const ENTRIES = [
   },
   {
     id: 'references',
-    keywords: ['reference', 'references', 'recommendation', 'testimonial', 'vouch', 'proof', 'verify', 'reviews'],
+    keywords: ['reference', 'references', 'recommendation', 'testimonial', 'vouch', 'proof', 'verify', 'verified', 'verification', 'verifiable', 'checkable', 'reviews'],
     answer:
       "Most of it is checkable without asking anyone.\n\nDaga Taxi is live on Google Play. The packages are on pub.dev under a verified publisher tied to this domain. The certifications on this page carry credential IDs and verification links. There's a client testimonial on his Upwork profile, and he's rated 5.0.\n\nFor a named reference from Medco or a client, email him and he'll arrange it.",
   },
@@ -416,7 +416,7 @@ export const ENTRIES = [
     id: 'next',
     keywords: ['next', 'future', 'plans', 'goal', 'goals', 'ambition', 'after graduation', 'five years'],
     answer:
-      "Finish the degree in 2027 while keeping the Medco work going remotely. Keep maintaining Daga Taxi and ethio_dev_kit, and keep building upkeep, his first tool aimed at Flutter developers everywhere. He's also in the inaugural cohort of ASIP, a Pan-African fellowship, which started in September 2026, and leads its software track for October 2026.\n\nBeyond that he'd tell you he doesn't have a five-year plan and is suspicious of people who present one. The closest thing to a method he has came from a classmate: grab the opportunity first, decide afterwards, because you can't know what a thing leads to until you're already inside it.",
+      "Finish the degree in 2027 while keeping the Medco work going remotely. Keep maintaining Daga Taxi and ethio_dev_kit, and keep building upkeep, his first tool aimed at Flutter developers everywhere. He's also in the inaugural cohort of ASIP, a Pan-African fellowship, which started in September 2026. He was its Software Development Lead for October 2026 only.\n\nBeyond that he'd tell you he doesn't have a five-year plan and is suspicious of people who present one. The closest thing to a method he has came from a classmate: grab the opportunity first, decide afterwards, because you can't know what a thing leads to until you're already inside it.",
   },
   {
     id: 'bahirdar',
@@ -476,6 +476,6 @@ export const ENTRIES = [
     id: 'asip',
     keywords: ['asip', 'doubleyou', 'fellowship', 'fellow', 'lead', 'leadership', 'hall of fame', 'pan-african', 'african student impact'],
     answer:
-      "He's a Fellow in the inaugural cohort of the African Student Impact Program (ASIP), Doubleyou Centre's pan-African fellowship of student builders from more than 18 African countries. It started in September 2026.\n\nFor October 2026 he's the programme's Software Development Lead. He set the software direction for the Develop and Test month with the founder and the leadership team, and the live build is the African Impact Hall of Fame.\n\nHis rule for it: what the cohort shows in public has to be what it has actually built.",
+      "He's a Fellow in the inaugural cohort of the African Student Impact Program (ASIP), Doubleyou Centre's pan-African fellowship of student builders. It started in September 2026 and he is still a Fellow.\n\nHe was the Software Development Lead for October 2026 only, and that role has finished. He coordinated the software track for fellows across 19+ African countries and sent the monthly software report at the end of October. He contributed to and tested the African Impact Hall of Fame site and wrote up findings; it isn't launched or finished. He also did product work on Labari.",
   },
 ];
