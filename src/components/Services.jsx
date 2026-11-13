@@ -1,8 +1,9 @@
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { services, processSteps, freelanceRecord, personalInfo, sectionCopy } from '../data/content';
 import { gsap, useReveal, ScrollTrigger } from '../lib/motion';
 import SectionHead from './SectionHead';
+import ServiceScene from './ServiceScene';
 import './Services.css';
 
 const copy = sectionCopy.services;
