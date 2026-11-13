@@ -36,6 +36,14 @@ function Service({ s, i, open, onToggle }) {
 export default function Services() {
   const root = useRef(null);
   const [open, setOpen] = useState(null);
+  // Wide screens get the one-at-a-time particle scene; phones keep the list.
+  const [wide, setWide] = useState(() => window.matchMedia('(min-width: 981px) and (min-height: 600px)').matches);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 981px) and (min-height: 600px)');
+    const on = () => { setWide(mq.matches); setTimeout(() => ScrollTrigger.refresh(), 100); };
+    mq.addEventListener('change', on);
+    return () => mq.removeEventListener('change', on);
+  }, []);
   useReveal(root, (el) => {
     gsap.utils.toArray('.svc', el).forEach((row) => {
       const tl = gsap.timeline({ scrollTrigger: { trigger: row, start: 'top 88%', once: true } });
