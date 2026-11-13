@@ -3,7 +3,7 @@ import { ArrowDown, ArrowUpRight } from 'lucide-react';
 import { personalInfo, projects } from '../data/content';
 import { gsap, reduced, scrollToId } from '../lib/motion';
 import { INTRO_EVENT } from './Preloader';
-import PhoneShowcase from './PhoneShowcase';
+import HeroPortrait from './HeroPortrait';
 import './Hero.css';
 
 const liveCount = projects.filter((p) => p.status === 'Live').length;
@@ -129,7 +129,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="hero" id="hero" ref={root} aria-label="Introduction">
+    <section className="hero hero--hold" id="hero" ref={root} aria-label="Introduction">
       <div className="hero__inner wrap">
         <div className="hero__top">
           <span className="status">
@@ -178,7 +178,7 @@ export default function Hero() {
           </div>
 
           <div className="hero__stage">
-            <PhoneShowcase />
+            <HeroPortrait />
           </div>
         </div>
       </div>

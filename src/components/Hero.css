@@ -130,3 +130,10 @@
   .hero__ctas .btn { flex: 1; min-width: 0; }
   .hero__facts { gap: 10px; }
 }
+
+/* The hero holds still for one extra screen while the portrait rebuilds
+   itself as the stack. Wide screens only; phones just scroll on. */
+@media (min-width: 981px) and (min-height: 620px) {
+  .hero--hold { display: block; min-height: 0; height: 195svh; }
+  .hero--hold .hero__inner { position: sticky; top: 0; height: 100svh; }
+}
