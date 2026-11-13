@@ -180,8 +180,12 @@ export const skillGroups = [
       'FusedLocationProviderClient', 'Offline-first Architecture'],
   },
   {
+    label: 'Web frontend',
+    items: ['Vue.js', 'React', 'JavaScript', 'HTML & CSS'],
+  },
+  {
     label: 'Backend & data',
-    items: ['REST APIs', 'API Integration', 'JSON-RPC', 'Firebase', 'SQLite', 'Room', 'Socket.io / Real-time Systems'],
+    items: ['Spring Boot', 'PostgreSQL', 'REST APIs', 'API Integration', 'JSON-RPC', 'Firebase', 'SQLite', 'Room', 'Socket.io / Real-time Systems'],
   },
   {
     label: 'Payments & local platforms',
