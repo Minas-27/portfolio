@@ -110,9 +110,9 @@ export const sectionCopy = {
   },
   contact: {
     label: 'Contact',
-    title: "Let's build your next app",
+    title: "Let's build your next product",
     // The closing headline: the second part is set in the accent.
-    band: ["Let's build", 'your next app'],
+    band: ["Let's build", 'your next product'],
     subtitle: 'Open to freelance projects. Have a project in mind? Let\'s talk.',
   },
 };
