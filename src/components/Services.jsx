@@ -91,11 +91,13 @@ export default function Services() {
       <div className="wrap">
         <SectionHead id="services" copy={copy} titleId="services-title" />
 
-        <ol className="svc__list">
-          {services.map((s, i) => (
-            <Service key={s.title} s={s} i={i} open={open === i} onToggle={() => toggle(i)} />
-          ))}
-        </ol>
+        {wide ? <ServiceScene /> : (
+          <ol className="svc__list">
+            {services.map((s, i) => (
+              <Service key={s.title} s={s} i={i} open={open === i} onToggle={() => toggle(i)} />
+            ))}
+          </ol>
+        )}
 
         <div className="process">
           <h3 className="process__title">{copy.process}</h3>
