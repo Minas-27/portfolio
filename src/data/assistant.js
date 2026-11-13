@@ -158,13 +158,13 @@ export const ENTRIES = [
     id: 'who',
     keywords: ['who', 'about', 'yourself', 'introduce', 'bio', 'background', 'abraham', 'tell me about him'],
     answer:
-      "Abraham Addisu builds mobile apps, Android in Kotlin and Jetpack Compose, and Flutter. He's a Full Stack Engineer with a mobile focus at Medco Technology Solutions in Ethiopia, and at the same time a final-year Software Engineering student at Bahir Dar Institute of Technology. He graduates in 2027.\n\nMost of his work lands in healthcare, insurance and transport. He's back in Bahir Dar for his final year and kept the Medco job remotely.",
+      "Abraham Addisu is a full stack engineer: web frontends in Vue.js and React, Spring Boot backends, and mobile apps in Kotlin, Jetpack Compose and Flutter. He's a Full Stack Engineer at Medco Technology Solutions in Ethiopia, and at the same time a final-year Software Engineering student at Bahir Dar Institute of Technology. He graduates in 2027.\n\nMost of his work lands in healthcare, insurance and transport. He's back in Bahir Dar for his final year and kept the Medco job remotely.",
   },
   {
     id: 'build',
     keywords: ['build', 'builds', 'do', 'does', 'work on', 'speciali', 'focus', 'expertise', 'what kind of'],
     answer:
-      "Mobile apps, mostly. Android with Kotlin and Jetpack Compose, or Flutter when one codebase has to cover both platforms, architecture through to the Play Store listing and the maintenance afterwards.\n\nWithin that, three areas keep coming up. Healthcare and insurance: claims, underwriting, motor insurance, payments. That's the day job at Medco. Real-time and location: live tracking and driver dispatch, proven in a ride-hailing platform carrying real passengers. And Ethiopian localisation: the calendar, Amharic typography, phone and currency validation, most of it open-sourced.\n\nThere's backend work behind all of it, but the thing he actually builds is the app.",
+      "The whole product. At Medco that means the web frontend, the Spring Boot backend and the mobile apps, Super App Mini Apps included. On mobile it's Android with Kotlin and Jetpack Compose, or Flutter when one codebase has to cover both platforms, architecture through to the Play Store listing and the maintenance afterwards.\n\nWithin that, three areas keep coming up. Healthcare and insurance: claims, underwriting, motor insurance, payments. That's the day job at Medco. Real-time and location: live tracking and driver dispatch, proven in a ride-hailing platform carrying real passengers. And Ethiopian localisation: the calendar, Amharic typography, phone and currency validation, most of it open-sourced.\n\nThe backend and the web side are his work too, not someone else's.",
   },
   {
     id: 'skills',
@@ -356,7 +356,7 @@ export const ENTRIES = [
     id: 'backend',
     keywords: ['backend', 'back-end', 'server', 'database', 'api', 'node', 'full stack', 'fullstack', 'web'],
     answer:
-      "Yes, though he'd describe himself as mobile-first rather than backend-first, and he'd say so before you found out.\n\nIn practice: REST APIs and JSON-RPC integrations, Firebase, SQLite and Room locally, Socket.io for real-time, and the backend behind the Daga Taxi platform. At Medco the job title is Full Stack Engineer with a mobile focus, which is an accurate description of the split.\n\nThe honest version: he can build and reason about the whole stack, and the layer he's fastest and most opinionated in is the app.",
+      "Yes. At Medco he works on the Spring Boot backend, with PostgreSQL behind it, as well as the web frontend and the mobile apps.\n\nBeyond that: REST APIs and JSON-RPC integrations, Firebase, SQLite and Room locally, Socket.io for real-time, and the backend behind the Daga Taxi platform. At Medco the job title is Full Stack Engineer, and the work matches it.\n\nThe honest version: he builds and reasons about the whole stack, and mobile is the layer he has shipped the most in.",
   },
   {
     id: 'kotlinflutter',
