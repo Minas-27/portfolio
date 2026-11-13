@@ -1,0 +1,42 @@
+.hp {
+  position: relative;
+  width: min(440px, 100%);
+  aspect-ratio: 0.86;
+  justify-self: center;
+}
+.hp__canvas { position: absolute; inset: -12% -22%; width: 144%; height: 124%; display: block; opacity: 0; }
+.hp.is-live .hp__canvas { opacity: 1; }
+.hp__photo {
+  position: absolute; left: 50%; top: 50%; width: auto; height: 94%;
+  transform: translate(-50%, -50%); opacity: 0; pointer-events: none; max-width: none;
+  /* the shoulders fade out instead of ending on a hard line */
+  -webkit-mask-image: linear-gradient(#000 74%, transparent 99%); mask-image: linear-gradient(#000 74%, transparent 99%);
+}
+/* Phone lead: the hero opens on the live phone, as before. */
+.hp--phone { aspect-ratio: auto; display: grid; justify-items: center; }
+.hp__phone { position: relative; z-index: 1; display: grid; justify-items: center; width: 100%; }
+.hp__phone .phone__frame { width: min(292px, 100%); }
+.hp--phone .hp__canvas, .hp--phone .hp__layers { inset: -8% -22%; height: 116%; }
+
+/* No WebGL: just the photograph. */
+.hp.is-plain .hp__photo { opacity: 1; }
+
+.hp__layers { position: absolute; inset: -12% -22%; pointer-events: none; }
+.hp__layers li {
+  position: absolute; display: grid; gap: 2px; padding-left: 14px; width: max-content; max-width: 150px;
+  border-left: 1px solid var(--line-2);
+  opacity: 0; transform: translate(10px, -50%);
+  transition: opacity var(--dur-2) var(--ease-out), transform var(--dur-3) var(--ease-out), border-color var(--dur-1);
+}
+.hp.is-stack .hp__layers li { opacity: 0.55; transform: translate(18px, -50%); }
+.hp.is-stack .hp__layers li.is-on { opacity: 1; border-color: var(--accent); }
+.hp__layers strong { font: 700 clamp(1rem, 1.4vw, 1.375rem) / 1 var(--f-display); font-stretch: 85%; text-transform: uppercase; letter-spacing: -0.01em; }
+.hp__layers li.is-on strong { color: var(--accent); }
+.hp__no { color: var(--fg-3); }
+
+@media (max-width: 980px) {
+  .hp { width: min(250px, 62vw); justify-self: start; }
+  .hp__canvas, .hp__layers { inset: -8% -30% -8% -8%; width: 138%; height: 116%; }
+  .hp__layers li { padding-left: 8px; }
+  .hp__layers span:last-child { display: none; }
+}
