@@ -121,16 +121,22 @@ export const upworkProfile = personalInfo.upwork;
 
 export const services = [
   {
+    title: 'Full Stack Builds: Web, Backend & Mobile',
+    short: 'Full Stack',
+    summary: 'Vue or React frontend, Spring Boot and PostgreSQL backend, and the mobile apps, built by one person so they fit each other.',
+    description: 'The web frontend in Vue.js or React, the Spring Boot backend on PostgreSQL, and the mobile apps, built to fit each other. This is the split of my day job at Medco: I work on all three, so the API is designed by someone who also builds the screens that call it.',
+  },
+  {
     title: 'Android & Flutter Apps, End to End',
     short: 'Android & Flutter',
     summary: 'Kotlin and Compose, or Flutter for both platforms. Architecture to Play Store, then the maintenance.',
     description: 'Native Android in Kotlin and Jetpack Compose, or Flutter when one codebase has to serve both platforms. Architecture, Figma-to-code, Firebase, Play Store release, and maintenance after it ships.',
   },
   {
-    title: 'Healthcare & Insurance Mobile Systems',
+    title: 'Healthcare & Insurance Systems',
     short: 'Healthcare & Insurance',
-    summary: 'Claims, underwriting and payment apps wired into systems that were already running.',
-    description: 'Client-facing apps for claims, underwriting, motor insurance and payments, wired into backend systems that were already running before I arrived. This is the day job, and most of the difficulty is understanding the workflow rather than writing the screen.',
+    summary: 'Claims, underwriting and payment systems, web and mobile, wired into what was already running.',
+    description: 'Client-facing web and mobile apps for claims, underwriting, motor insurance and payments, wired into backend systems that were already running before I arrived. This is the day job, and most of the difficulty is understanding the workflow rather than writing the screen.',
   },
   {
     title: 'Real-Time & Location Features',
