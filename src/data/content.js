@@ -41,15 +41,15 @@ export const personalInfo = {
   github: 'https://github.com/Minas-27',
   upwork: 'https://www.upwork.com/freelancers/~0142f1cf79221e6871',
   roles: [
-    'Mobile & Full Stack Engineer',
-    'Android Engineer (Kotlin & Compose)',
-    'Flutter Developer',
+    'Full Stack Engineer',
+    'Vue, React & Spring Boot',
+    'Android, Flutter & Mini Apps',
   ],
   education: 'B.Sc. in Software Engineering, Bahir Dar University, expected 2027.',
   valueProp:
-    'I build mobile apps people rely on, Android and Flutter, from the first screen to the store listing. Healthcare, insurance and transport, built for markets where a stable connection is not a given.',
+    'I build products end to end: the web frontend, the Spring Boot backend, and the Android and Flutter apps, down to Mini Apps inside a super app. Healthcare, insurance and transport, built for markets where a stable connection is not a given.',
   // The first line of valueProp, for the hero.
-  tagline: 'I build mobile apps people rely on, Android and Flutter, from the first screen to the store listing.',
+  tagline: 'I build products end to end: the web frontend, the Spring Boot backend, and the Android and Flutter apps.',
   resumes: {
     // Bump the version when the PDF changes, otherwise browsers and the
     // CDN keep serving the cached old one from the same filename.
@@ -58,7 +58,7 @@ export const personalInfo = {
   profilePhoto: profilePhotoImg,
   // Short on purpose: the page says who, the detail lives in the CV and the chat.
   about: [
-    'Mobile engineer shipping production Android and Flutter apps for over two years. Full Stack Engineer at Medco Technology Solutions, and maintainer of ethio_dev_kit and upkeep on pub.dev.',
+    'Full Stack Engineer at Medco Technology Solutions, where I work across the web frontend, the Spring Boot backend and the mobile apps, Super App Mini Apps included. Shipping production Android and Flutter apps for over two years, and maintainer of ethio_dev_kit and upkeep on pub.dev.',
   ],
 };
 
