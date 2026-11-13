@@ -232,7 +232,7 @@ export const experiences = [
   {
     title: 'Full Stack Engineer',
     type: 'Full-time',
-    summary: 'Web and mobile apps for healthcare and insurance clients.',
+    summary: 'Web frontend, Spring Boot backend and mobile apps, Super App Mini Apps included, for healthcare and insurance clients.',
     company: 'Medco Technology Solutions',
     date: 'Apr 2026 - Present',
     location: 'Addis Ababa on-site, remote since Sep 2026',
