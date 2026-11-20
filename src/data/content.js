@@ -327,7 +327,7 @@ export const projects = [
     featured: true,
     role: 'Creator & Maintainer',
     description:
-      'Open-source 6-package Flutter/Dart toolkit for Ethiopian developers, live on pub.dev, MIT licensed: ethio_calendar (Gregorian↔Ethiopian date conversion), ethiopic_typography (bilingual theming), ethio_validators (phone/currency/Fayda ID format validation), amharic_stt (Amharic speech-to-text support, wrapping an existing speech engine so Amharic works inside Flutter), ethio_holidays (dynamically computed Ethiopian holidays), ethio_address (Region → Zone → Woreda data with cascading picker widgets).',
+      'Open-source 6-package Flutter/Dart toolkit for Ethiopian developers, live on pub.dev, MIT licensed: ethio_calendar (Gregorian↔Ethiopian date conversion and Ethiopian time of day, the clock that counts from 06:00), ethiopic_typography (bilingual theming), ethio_validators (phone/currency/Fayda ID format validation), amharic_stt (Amharic speech-to-text support, wrapping an existing speech engine so Amharic works inside Flutter), ethio_holidays (dynamically computed Ethiopian holidays), ethio_address (Region → Zone → Woreda data with cascading picker widgets).',
     tags: ['Flutter', 'Dart', 'Open Source', 'pub.dev'],
     status: 'Live',
     link: 'https://pub.dev/publishers/abroid.dev',
