@@ -200,7 +200,7 @@ export const ENTRIES = [
     id: 'ethiodevkit',
     keywords: ['ethio_dev_kit', 'ethio dev kit', 'ethiodevkit', 'package', 'packages', 'open source', 'opensource', 'pub.dev', 'pubdev', 'library'],
     answer:
-      "ethio_dev_kit, an open-source Flutter/Dart toolkit for Ethiopian developers. Six packages, MIT licensed, published under his own verified publisher at pub.dev/publishers/abroid.dev, alongside upkeep.\n\nethio_calendar for Gregorian↔Ethiopian date conversion, ethiopic_typography for bilingual theming, ethio_validators for phone, currency and Fayda ID formats, amharic_stt, ethio_holidays, and ethio_address for Region, Zone and Woreda data.\n\nHe'd say none of it is clever engineering. It's work somebody had to do, and until someone does it every app built here starts at a disadvantage nobody wrote down.",
+      "ethio_dev_kit, an open-source Flutter/Dart toolkit for Ethiopian developers. Six packages, MIT licensed, published under his own verified publisher at pub.dev/publishers/abroid.dev, alongside upkeep.\n\nethio_calendar for Gregorian↔Ethiopian date conversion and Ethiopian time (the clock that starts at 06:00, so 09:00 reads as 3:00 in Ethiopian time), ethiopic_typography for bilingual theming, ethio_validators for phone, currency and Fayda ID formats, amharic_stt, ethio_holidays, and ethio_address for Region, Zone and Woreda data.\n\nHe'd say none of it is clever engineering. It's work somebody had to do, and until someone does it every app built here starts at a disadvantage nobody wrote down.",
   },
   {
     id: 'stt',
