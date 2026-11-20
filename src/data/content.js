@@ -58,7 +58,7 @@ export const personalInfo = {
   profilePhoto: profilePhotoImg,
   // Short on purpose: the page says who, the detail lives in the CV and the chat.
   about: [
-    'Full Stack Engineer at Medco Technology Solutions, where I work across the web frontend, the Spring Boot backend and the mobile apps, Super App Mini Apps included. Shipping production Android and Flutter apps for over two years, and maintainer of ethio_dev_kit and upkeep on pub.dev.',
+    'Full Stack Engineer at Medco Technology Solutions. I build web, backend and mobile products, end to end.',
   ],
 };
 
@@ -185,7 +185,7 @@ export const skillGroups = [
   },
   {
     label: 'Backend & data',
-    items: ['Spring Boot', 'PostgreSQL', 'REST APIs', 'API Integration', 'JSON-RPC', 'Firebase', 'SQLite', 'Room', 'Socket.io / Real-time Systems'],
+    items: ['Spring Boot', 'Node.js', 'PostgreSQL', 'REST APIs', 'API Integration', 'JSON-RPC', 'Firebase', 'SQLite', 'Room', 'Socket.io / Real-time Systems'],
   },
   {
     label: 'Payments & local platforms',
