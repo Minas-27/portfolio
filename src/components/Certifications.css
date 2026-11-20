@@ -1,90 +1,244 @@
-.certs__list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.cert {
+/* ── The receipts: prints on a desk ───────────────────────────────
+   A cutting-mat surface, the prints scattered on it. Paper is white
+   in both themes, because a certificate is.                        */
+.desk {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  min-width: 0;
-  padding: 18px 16px 14px;
-  background: var(--bg-2);
+  aspect-ratio: 16 / 9.4;
+  min-height: 620px;
+  max-height: 940px;
+  width: 100%;
   border: 1px solid var(--line);
-  transition: border-color 0.45s var(--ease-out);
-}
-.cert:hover,
-.cert:focus-within { border-color: var(--accent); }
-
-.cert__index {
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  color: var(--fg-3);
-}
-.cert__main {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 0;
-  padding-right: 2em;
-}
-.cert__title {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  font: 600 clamp(1.05rem, 1.4vw, 1.2rem) / 1.25 var(--f-display);
-  font-stretch: 94%;
-  letter-spacing: -0.02em;
-}
-.cert__thumb {
-  flex: 0 0 auto;
-  width: 64px;
-  height: 46px;
-  margin-top: 1px;
-  padding: 0;
+  background:
+    radial-gradient(circle, var(--line) 1px, transparent 1.4px) 0 0 / 28px 28px,
+    var(--bg-2);
   overflow: hidden;
-  border: 1px solid var(--line-2);
-  background: #fff;
-  transition: border-color var(--dur-1) ease;
+  touch-action: pan-y;
 }
-.cert__thumb img {
+.desk::before {
+  /* the mat's ruler along the top */
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 10px;
+  background: repeating-linear-gradient(90deg, var(--line-2) 0 1px, transparent 1px 28px);
+  pointer-events: none;
+}
+
+.desk__corner {
+  position: absolute;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--fg-3);
+  pointer-events: none;
+}
+.desk__corner--tl { top: 22px; left: 22px; }
+.desk__corner--tl span { color: var(--fg); }
+.desk__corner--tr { top: 14px; right: 14px; }
+.desk__corner--bl { bottom: 20px; left: 22px; }
+.desk__corner--bl b { font-weight: 400; color: var(--fg); margin-left: 4px; }
+.desk__corner--tr .desk__shuffle { margin-left: 4px; }
+.desk__hint--touch { display: none; }
+
+.desk__shuffle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid var(--line-2);
+  background: var(--bg);
+  color: var(--fg-2);
+  pointer-events: auto;
+  transition: color var(--dur-1) ease, border-color var(--dur-1) ease;
+}
+.desk__shuffle:hover,
+.desk__shuffle:focus-visible { color: var(--accent); border-color: var(--accent); }
+.desk__shuffle svg { transition: transform var(--dur-2) var(--ease-out); }
+.desk__shuffle:hover svg { transform: rotate(180deg); }
+
+.desk__pile { position: absolute; inset: 0; }
+
+.desk__item {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--w);
+  transform: rotate(var(--r));
+  will-change: transform;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* ── A print ── */
+.print {
+  display: block;
+  width: 100%;
+  padding: 7% 7% 0;
+  background: #fbfaf7;
+  color: #141413;
+  text-align: left;
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.06),
+    0 18px 34px -18px rgba(0, 0, 0, 0.75),
+    0 3px 8px -3px rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  -webkit-user-drag: none;
+  transition: box-shadow 0.4s var(--ease-out), transform 0.4s var(--ease-out);
+}
+.print:hover { transform: translateY(-4px); box-shadow: 0 1px 0 rgba(0,0,0,.06), 0 28px 44px -20px rgba(0,0,0,.8), 0 4px 10px -3px rgba(0,0,0,.4); }
+.desk__item.is-lifted .print {
+  cursor: grabbing;
+  transform: scale(1.05);
+  box-shadow: 0 50px 70px -30px rgba(0, 0, 0, 0.85), 0 10px 20px -8px rgba(0, 0, 0, 0.45);
+}
+.print:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+
+.print__photo {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.45;
+  background: #fff;
+  outline: 1px solid rgba(20, 20, 19, 0.08);
+}
+.desk__item:nth-child(7) .print__photo { aspect-ratio: 0.72; } /* the portrait one */
+.print__photo > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
-}
-.cert__thumb--logo {
-  display: grid;
-  place-items: center;
-  padding: 6px;
-  background: #fff;
-  text-decoration: none;
-}
-.cert__thumb--logo img {
-  object-fit: contain;
-  object-position: center;
-}
-.cert__thumb:hover,
-.cert__thumb:focus-visible { border-color: var(--accent); }
-.cert__meta { text-transform: none; letter-spacing: 0.02em; color: var(--fg-2); }
-.cert__detail { font-size: var(--t-body-sm); color: var(--fg-2); }
-.cert__action {
-  align-self: flex-start;
-  margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px dashed var(--line-2);
-  font: 400 var(--t-meta) / 1.4 var(--f-mono);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--fg-2);
-  white-space: nowrap;
+  pointer-events: none;
 }
 
-@media (max-width: 860px) {
-  .certs__list { grid-template-columns: 1fr; }
+/* online-only credentials, printed as a card */
+.print__photo--card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background:
+    repeating-linear-gradient(135deg, rgba(20,20,19,0.035) 0 1px, transparent 1px 7px),
+    #fff;
+}
+.print__photo--card > img {
+  width: 44%;
+  height: auto;
+  max-height: 42%;
+  margin-bottom: 4px;
+  object-fit: contain;
+}
+.print__verified,
+.print__id {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: 500 clamp(0.5rem, 0.62vw, 0.625rem) / 1 var(--f-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.print__verified { color: #0e7a38; }
+.print__id { color: rgba(20, 20, 19, 0.4); letter-spacing: 0.04em; }
+
+.print__cap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 9% 0 10%;
+}
+.print__title {
+  font: 600 clamp(0.8rem, 1.05vw, 1.02rem) / 1.12 var(--f-display);
+  font-stretch: 88%;
+  letter-spacing: -0.015em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.print__meta {
+  display: flex;
+  gap: 8px;
+  min-width: 0;
+  font: 400 clamp(0.5rem, 0.6vw, 0.625rem) / 1.2 var(--f-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(20, 20, 19, 0.5);
+}
+.print__meta span:nth-child(2) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.print__meta span:first-child { color: var(--accent); }
+
+/* ── The stamp on the winners ── */
+.print__stamp {
+  position: absolute;
+  right: -6%;
+  bottom: -9%;
+  display: grid;
+  place-items: center;
+  width: 34%;
+  aspect-ratio: 1;
+  border: 2px solid #d12b22;
+  border-radius: 50%;
+  color: #d12b22;
+  transform: rotate(-16deg);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+.print__stamp::before {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border: 1px dashed currentColor;
+  border-radius: 50%;
+}
+.print__stamp b {
+  font: 800 clamp(0.75rem, 1.15vw, 1.1rem) / 1 var(--f-display);
+  font-stretch: 78%;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  background: #fbfaf7;
+  padding: 2px 4px;
+}
+
+/* ── Touch and small screens: a loose pile you scroll through ── */
+@media (hover: none), (pointer: coarse), (max-width: 760px) {
+  .print { cursor: pointer; }
+  .desk__hint { display: none; }
+  .desk__hint--touch { display: inline; }
+}
+@media (max-width: 760px) {
+  .desk {
+    aspect-ratio: auto;
+    min-height: 0;
+    max-height: none;
+    padding: 64px 14px 72px;
+  }
+  .desk__pile {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 26px 14px;
+  }
+  .desk__item {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: auto;
+  }
+  .desk__item:nth-child(7) .print__photo { aspect-ratio: 1.45; }
+  .print__title { font-size: 0.82rem; }
+  .print__meta { font-size: 0.55rem; }
+  .print__stamp b { font-size: 0.75rem; }
+  .print__verified, .print__id { font-size: 0.5rem; }
+  .desk__corner--tl, .desk__corner--tr { top: 18px; }
+  .desk__corner--tl { left: 14px; }
+  .desk__corner--tr { right: 14px; }
+  .desk__corner--bl { left: 14px; bottom: 26px; gap: 10px; }
+  .desk__hint--touch { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .print, .print:hover, .desk__item.is-lifted .print { transition: none; }
 }
 
 /* ── Certificate viewer ────────────────────────────────────────── */

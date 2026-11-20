@@ -442,14 +442,14 @@ export const issuerLogos = {
 };
 
 export const certifications = [
-  { title: 'Hult Prize 2026: Ethiopia National Finalist', issuer: 'Hult Prize Foundation', date: 'Jun 2026', detail: 'FaydaHealth, with Nova Tech. Top 8 of 600+ university teams', credentialId: '99956319-0b92-47d7-bacc-ce05e78a7a79', link: 'https://credsverse.com/credentials/99956319-0b92-47d7-bacc-ce05e78a7a79' },
-  { title: 'Hult Prize 2026: On-Campus Competition Winner', issuer: 'Hult Prize Foundation', date: 'Feb 2026', detail: 'FaydaHealth, Bahir Dar University, with Nova Tech', image: hultOnCampusImg },
-  { title: 'CoBuild Ethiopia AI Hackathon 2025: 2nd Place', issuer: 'Entrepreneurship Development Institute (EDI), Ethiopia', date: 'Nov 2025', detail: 'FaydaHealth', image: cobuildHackathonImg },
-  { title: 'Global and Planetary Security', issuer: 'One Young World Academy', date: 'Sep 2026', detail: '', credentialId: 'e35919ff-5879-4604-8eb3-910d64775ca1', link: 'https://www.credly.com/badges/e35919ff-5879-4604-8eb3-910d64775ca1/public_url' },
-  { title: 'AI Fluency: Framework & Foundations', issuer: 'Anthropic', date: 'Jul 2026', detail: '', credentialId: 'bngf5pd9g4r4', link: 'https://verify.skilljar.com/c/bngf5pd9g4r4' },
-  { title: 'Wellness Hackathon 2026', issuer: 'ALX Ethiopia', date: 'Jun 2026', detail: 'Participant', image: wellnessImg },
-  { title: 'DevQuest 2025: International Hackathon', issuer: 'SLIIT', date: '2025', detail: 'Participant', image: devquestImg },
-  { title: 'Innovation to Impact Program', issuer: 'Bahir Dar i-Teams (Cambridge)', date: '2025', detail: '', image: iteamsInnovationImg },
+  { kind: 'won', stamp: 'Top 8', title: 'Hult Prize 2026: Ethiopia National Finalist', issuer: 'Hult Prize Foundation', date: 'Jun 2026', detail: 'FaydaHealth, with Nova Tech. Top 8 of 600+ university teams', credentialId: '99956319-0b92-47d7-bacc-ce05e78a7a79', link: 'https://credsverse.com/credentials/99956319-0b92-47d7-bacc-ce05e78a7a79' },
+  { kind: 'won', stamp: 'Winner', title: 'Hult Prize 2026: On-Campus Competition Winner', issuer: 'Hult Prize Foundation', date: 'Feb 2026', detail: 'FaydaHealth, Bahir Dar University, with Nova Tech', image: hultOnCampusImg },
+  { kind: 'won', stamp: '2nd', title: 'CoBuild Ethiopia AI Hackathon 2025: 2nd Place', issuer: 'Entrepreneurship Development Institute (EDI), Ethiopia', date: 'Nov 2025', detail: 'FaydaHealth', image: cobuildHackathonImg },
+  { kind: 'verified', title: 'Global and Planetary Security', issuer: 'One Young World Academy', date: 'Sep 2026', detail: '', credentialId: 'e35919ff-5879-4604-8eb3-910d64775ca1', link: 'https://www.credly.com/badges/e35919ff-5879-4604-8eb3-910d64775ca1/public_url' },
+  { kind: 'verified', title: 'AI Fluency: Framework & Foundations', issuer: 'Anthropic', date: 'Jul 2026', detail: '', credentialId: 'bngf5pd9g4r4', link: 'https://verify.skilljar.com/c/bngf5pd9g4r4' },
+  { kind: 'joined', title: 'Wellness Hackathon 2026', issuer: 'ALX Ethiopia', date: 'Jun 2026', detail: 'Participant', image: wellnessImg },
+  { kind: 'joined', title: 'DevQuest 2025: International Hackathon', issuer: 'SLIIT', date: '2025', detail: 'Participant', image: devquestImg },
+  { kind: 'joined', title: 'Innovation to Impact Program', issuer: 'Bahir Dar i-Teams (Cambridge)', date: '2025', detail: '', image: iteamsInnovationImg },
 ];
 
 export const freelanceRecord = {
