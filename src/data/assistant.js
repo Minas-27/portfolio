@@ -356,7 +356,7 @@ export const ENTRIES = [
     id: 'backend',
     keywords: ['backend', 'back-end', 'server', 'database', 'api', 'node', 'full stack', 'fullstack', 'web'],
     answer:
-      "Yes. At Medco he works on the Spring Boot backend, with PostgreSQL behind it, as well as the web frontend and the mobile apps.\n\nBeyond that: REST APIs and JSON-RPC integrations, Firebase, SQLite and Room locally, Socket.io for real-time, and the backend behind the Daga Taxi platform. At Medco the job title is Full Stack Engineer, and the work matches it.\n\nThe honest version: he builds and reasons about the whole stack, and mobile is the layer he has shipped the most in.",
+      "Yes. At Medco he works on the Spring Boot backend, with PostgreSQL behind it, as well as the web frontend and the mobile apps.\n\nBeyond that: Node.js, which he has used across several projects, REST APIs and JSON-RPC integrations, Firebase, SQLite and Room locally, Socket.io for real-time, and the backend behind the Daga Taxi platform. At Medco the job title is Full Stack Engineer, and the work matches it.\n\nThe honest version: he builds and reasons about the whole stack, and mobile is the layer he has shipped the most in.",
   },
   {
     id: 'kotlinflutter',
